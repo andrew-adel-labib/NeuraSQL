@@ -1,0 +1,142 @@
+# =========================
+# Python
+# =========================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+develop-eggs/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+.python-version
+venv/
+.venv/
+ENV/
+env/
+env.bak/
+venv.bak/
+
+# =========================
+# Environment / Secrets
+# =========================
+.env
+.env.*
+*.env
+secrets.json
+credentials.json
+*.pem
+*.key
+*.crt
+
+# =========================
+# API Keys / Tokens
+# =========================
+*api_key*
+*secret*
+*token*
+hf_token*
+claude*
+openai*
+groq*
+
+# =========================
+# Streamlit / FastAPI
+# =========================
+.streamlit/
+logs/
+*.log
+
+# =========================
+# Cache
+# =========================
+.cache/
+mcp_server/cache/
+*.cache
+schema_cache.json
+query_cache.json
+business_dimensions_cache.json
+
+# =========================
+# Local Databases
+# =========================
+*.db
+*.sqlite3
+*.sqlite
+*.mdb
+
+# =========================
+# Jupyter / Testing
+# =========================
+.ipynb_checkpoints/
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# =========================
+# IDE
+# =========================
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+Thumbs.db
+
+# =========================
+# Docker
+# =========================
+docker-compose.override.yml
+*.tar
+
+# =========================
+# Power BI / BI Sensitive
+# =========================
+*.pbix
+*.pbit
+powerbi_config.json
+embed_tokens.json
+
+# =========================
+# SQL Dumps / Exports
+# =========================
+*.bak
+*.sql
+*.csv
+*.xlsx
+*.xls
+*.parquet
+
+# =========================
+# Model Files
+# =========================
+*.pt
+*.pth
+*.bin
+*.onnx
+*.ckpt
+
+# =========================
+# Temporary
+# =========================
+tmp/
+temp/
+*.tmp

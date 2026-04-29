@@ -1,0 +1,1589 @@
+{
+  "tables": [
+    {
+      "name": "QBS_SighCast_Customer",
+      "columns": [
+        "CompanyID",
+        "CustomerNo",
+        "CustomerNameE",
+        "CustomerNameA",
+        "InvoiceAccount",
+        "Category",
+        "Category2",
+        "Category3",
+        "Category4",
+        "TermsId",
+        "SalesmanNo",
+        "AddAddressE",
+        "AreaNo",
+        "CityNo",
+        "DistrictNo",
+        "RegionNo",
+        "Tel",
+        "StopOrder",
+        "BadPayer",
+        "StopDate",
+        "ForceCreditLimit",
+        "CreditLimit",
+        "AllowCheck",
+        "AllowDeferred",
+        "AllowCash",
+        "PriceId",
+        "TaxId",
+        "Balance",
+        "Branchid",
+        "Latitude",
+        "Longitude",
+        "Altitude",
+        "RouteID",
+        "JPID",
+        "Status",
+        "LicenseNo",
+        "ModifiedOn",
+        "ModifiedBy",
+        "CreatedOn",
+        "Createdby",
+        "CustLink"
+      ]
+    },
+    {
+      "name": "QBS_SighCast_Branch",
+      "columns": [
+        "CompanyID",
+        "BranchID",
+        "Branch_Name",
+        "ModifiedOn",
+        "ModifiedBy",
+        "CreatedOn",
+        "Createdby"
+      ]
+    },
+    {
+      "name": "QBS_SighCast_Item",
+      "columns": [
+        "CompanyID",
+        "ItemNo",
+        "ItemNameE",
+        "ItemNameA",
+        "PrimaryUOM",
+        "SecondarUOM",
+        "GlobalUOM",
+        "Category1",
+        "Category2",
+        "Category3",
+        "Category4",
+        "TaxCodeID",
+        "ShortNameE",
+        "ShortNameA",
+        "barcode",
+        "Status",
+        "MinimumStock",
+        "MaximumStock",
+        "SaftyStock",
+        "BatchSupport",
+        "ModifiedOn",
+        "ModifiedBy",
+        "CreatedOn",
+        "Createdby",
+        "Link"
+      ]
+    },
+    {
+      "name": "QBS_SighCast_JourneyPlan",
+      "columns": [
+        "CompanyID",
+        "JPID",
+        "AssignedTO",
+        "BelongsTo",
+        "JP_NameE",
+        "JP_NameA",
+        "Branchid",
+        "Status",
+        "RouteID",
+        "ModifiedOn",
+        "ModifiedBy",
+        "CreatedOn",
+        "Createdby"
+      ]
+    },
+    {
+      "name": "QBS_SighCast_JPCustomer",
+      "columns": [
+        "JPID",
+        "CustomerID",
+        "Frequency",
+        "StartWeek",
+        "sat",
+        "sun",
+        "mon",
+        "tue",
+        "wed",
+        "thu",
+        "fri",
+        "VisitOrder",
+        "ModifiedOn",
+        "ModifiedBy",
+        "CreatedOn",
+        "Createdby"
+      ]
+    },
+    {
+      "name": "QBS_SighCast_Loading",
+      "columns": [
+        "CompanyID",
+        "Branch",
+        "Trx_Date",
+        "TripDate",
+        "SalesManID",
+        "ITEMID",
+        "Loading_QTY_Base",
+        "Unloading_QTY_Base",
+        "UOMID_Base",
+        "Loading_QTY_Large",
+        "Unloading_QTY_Large",
+        "UOMID_Large",
+        "Loading_QTY_Global",
+        "Unloading_QTY_Global",
+        "UOMID_Global",
+        "ItemLink"
+      ]
+    },
+    {
+      "name": "QBS_SighCast_Route",
+      "columns": [
+        "CompanyID",
+        "RouteID",
+        "RouteNameE",
+        "RouteNameA",
+        "Branchid",
+        "Category1",
+        "Category2",
+        "Category3",
+        "Category4",
+        "RegionNo",
+        "DistrictNo",
+        "CityNo",
+        "AreaNo",
+        "status",
+        "ModifiedOn",
+        "ModifiedBy",
+        "CreatedOn",
+        "Createdby"
+      ]
+    },
+    {
+      "name": "QBS_SighCast_Sales",
+      "columns": [
+        "CompanyID",
+        "OrderID",
+        "Serial",
+        "OrderType",
+        "OrderType_Des",
+        "InvoiceDate",
+        "DueDate",
+        "TripDate",
+        "RouteID",
+        "CustomerNo",
+        "InvoiceAccount",
+        "SalesmanNo",
+        "Item_Type",
+        "PriceListID",
+        "PaymentTermsID",
+        "PlannedPaymentMethod",
+        "Currency",
+        "ExchangeRate",
+        "ItemID",
+        "BaseQty",
+        "BaseUOM",
+        "LargeQty",
+        "LargeUOM",
+        "GlobalQty",
+        "GlobalUOM",
+        "UnitPrice",
+        "PromotionsTotal",
+        "TaxesTotal",
+        "FreeItem",
+        "LineTotal",
+        "Branch",
+        "CustLink",
+        "ItemLink"
+      ]
+    },
+    {
+      "name": "QBS_SighCast_Company",
+      "columns": [
+        "CompanyCode",
+        "CompanyCodeName",
+        "VATRegistration",
+        "CityName",
+        "Country",
+        "TaxableEntity"
+      ]
+    },
+    {
+      "name": "QBS_SighCast_CustomerOutStanding",
+      "columns": [
+        "CUSTOMER_ID",
+        "INVOICE_NUMBER",
+        "INVOICE_DATE",
+        "DUE_DATE",
+        "INVOICE_AMOUNT",
+        "AMOUNT_DUE",
+        "INVOICE_CURRENCY_CODE",
+        "Companyid",
+        "CustLink"
+      ]
+    },
+    {
+      "name": "QBS_SighCast_Salesman",
+      "columns": [
+        "CompanyID",
+        "SalesmanNo",
+        "SalesmanNameE",
+        "SalesmanNameA",
+        "Category1",
+        "Category2",
+        "Category3",
+        "Category4",
+        "BranchNo",
+        "RouteID",
+        "JPid",
+        "ProofOfVisit",
+        "Balance",
+        "CreditLimit",
+        "Status",
+        "ModifiedOn",
+        "ModifiedBy",
+        "CreatedOn",
+        "Createdby"
+      ]
+    },
+    {
+      "name": "QBS_SighCast_Target",
+      "columns": [
+        "CompanyID",
+        "Targetid",
+        "Dimensions",
+        "itemNo",
+        "Target",
+        "period",
+        "YearId",
+        "Status",
+        "ModifiedOn",
+        "ModifiedBy",
+        "CreatedOn",
+        "Createdby",
+        "ItemLink"
+      ]
+    },
+    {
+      "name": "QBS_SighCast_Time_To_Sell",
+      "columns": [
+        "DateAllowed",
+        "SalesmanNo",
+        "TripID",
+        "RouteID",
+        "BUID",
+        "TotalTime",
+        "Selling_Time",
+        "Travel",
+        "Stem",
+        "Selling_Variable"
+      ]
+    },
+    {
+      "name": "QBS_SighCast_Transfer_Request",
+      "columns": [
+        "CompanyID",
+        "Branch",
+        "Transfer_Date",
+        "TripDate",
+        "SalesmanNo",
+        "ItemNo",
+        "RequestedQty",
+        "UOMID",
+        "RequestedQty_Large",
+        "UOMID_Large",
+        "RequestedQty_Global",
+        "UOMID_Global",
+        "ItemLink"
+      ]
+    },
+    {
+      "name": "QBS_SighCast_VendorOutStanding",
+      "columns": [
+        "Companyid",
+        "SEGMENT1",
+        "PARTY_NAME",
+        "INVOICE_DATE",
+        "DUE_DATE",
+        "INVOICE_NUM",
+        "INVOICE_TYPE_LOOKUP_CODE",
+        "PAYMENT_TERM",
+        "INVOICE_CURRENCY_CODE",
+        "INVOICE_AMOUNT",
+        "RATE",
+        "PRE",
+        "AMOUNT_PAID",
+        "UNPAID"
+      ]
+    },
+    {
+      "name": "QBS_SighCast_Visits",
+      "columns": [
+        "Routeid",
+        "TripDate",
+        "SalesmanNo",
+        "CustomerNo",
+        "Starttime",
+        "finishtime",
+        "Visit status",
+        "Negative Reason",
+        "Branch",
+        "InRoute"
+      ]
+    },
+    {
+      "name": "DateDim",
+      "columns": [
+        "Date",
+        "Year",
+        "QuarterOfYear",
+        "MonthOfYear",
+        "MonthInt",
+        "DayOfMonth",
+        "DateInt",
+        "Month Name",
+        "Month & Year",
+        "Quarter & Year",
+        "DayOfWeek",
+        "DayOfWeekName",
+        "WeekEnding",
+        "MonthEnding",
+        "ISO Weeknumber",
+        "ISO Year",
+        "MonthnYear",
+        "QuarternYear",
+        "Fiscal Year",
+        "Fiscal Quarter",
+        "Fiscal Period",
+        "IsAfterToday",
+        "IsWorkingDay",
+        "DayOffset",
+        "WeekOffset",
+        "MonthOffset",
+        "QuarterOffset",
+        "YearOffset",
+        "WeekCompleted",
+        "MonthCompleted",
+        "QuarterCompleted",
+        "Month Short",
+        "WeekNumber",
+        "IsWorkingDayVal"
+      ]
+    },
+    {
+      "name": "DateDim1",
+      "columns": [
+        "Date",
+        "Year",
+        "QuarterOfYear",
+        "MonthOfYear",
+        "MonthInt",
+        "DayOfMonth",
+        "DateInt",
+        "Month Name",
+        "Month & Year",
+        "Quarter & Year",
+        "DayOfWeek",
+        "DayOfWeekName",
+        "WeekEnding",
+        "MonthEnding",
+        "ISO Weeknumber",
+        "ISO Year",
+        "ISO Day of Year",
+        "Week & Year",
+        "WeeknYear",
+        "MonthnYear",
+        "QuarternYear",
+        "Fiscal Year",
+        "Fiscal Quarter",
+        "Fiscal Period",
+        "IsAfterToday",
+        "IsWorkingDay",
+        "IsHoliday",
+        "DayOffset",
+        "WeekOffset",
+        "MonthOffset",
+        "QuarterOffset",
+        "YearOffset",
+        "FiscalYearOffset",
+        "WeekCompleted",
+        "MonthCompleted",
+        "QuarterCompleted",
+        "Months"
+      ]
+    },
+    {
+      "name": "Parameter",
+      "columns": [
+        "Parameter"
+      ]
+    }
+  ],
+  "relationships": [
+    "QBS_SighCast_CustomerOutStanding -> DateDim",
+    "QBS_SighCast_Loading -> DateDim",
+    "QBS_SighCast_Sales -> DateDim",
+    "QBS_SighCast_Target -> DateDim",
+    "QBS_SighCast_Time_To_Sell -> DateDim",
+    "QBS_SighCast_Transfer_Request -> DateDim",
+    "QBS_SighCast_VendorOutStanding -> DateDim",
+    "QBS_SighCast_Visits -> DateDim",
+    "QBS_SighCast_CustomerOutStanding -> DateDim1",
+    "QBS_SighCast_VendorOutStanding -> DateDim1",
+    "QBS_SighCast_Loading -> QBS_SighCast_Branch",
+    "QBS_SighCast_Route -> QBS_SighCast_Branch",
+    "QBS_SighCast_Time_To_Sell -> QBS_SighCast_Branch",
+    "QBS_SighCast_Transfer_Request -> QBS_SighCast_Branch",
+    "QBS_SighCast_Visits -> QBS_SighCast_Branch",
+    "QBS_SighCast_CustomerOutStanding -> QBS_SighCast_Company",
+    "QBS_SighCast_JourneyPlan -> QBS_SighCast_Company",
+    "QBS_SighCast_Route -> QBS_SighCast_Company",
+    "QBS_SighCast_Sales -> QBS_SighCast_Company",
+    "QBS_SighCast_Target -> QBS_SighCast_Company",
+    "QBS_SighCast_Transfer_Request -> QBS_SighCast_Company",
+    "QBS_SighCast_VendorOutStanding -> QBS_SighCast_Company",
+    "QBS_SighCast_CustomerOutStanding -> QBS_SighCast_Customer",
+    "QBS_SighCast_JPCustomer -> QBS_SighCast_Customer",
+    "QBS_SighCast_Sales -> QBS_SighCast_Customer",
+    "QBS_SighCast_Loading -> QBS_SighCast_Company",
+    "QBS_SighCast_Loading -> QBS_SighCast_Item",
+    "QBS_SighCast_Sales -> QBS_SighCast_Item",
+    "QBS_SighCast_Target -> QBS_SighCast_Item",
+    "QBS_SighCast_Transfer_Request -> QBS_SighCast_Item",
+    "QBS_SighCast_Sales -> QBS_SighCast_Branch",
+    "QBS_SighCast_JPCustomer -> QBS_SighCast_JourneyPlan",
+    "QBS_SighCast_JourneyPlan -> QBS_SighCast_Salesman",
+    "QBS_SighCast_Loading -> QBS_SighCast_Salesman",
+    "QBS_SighCast_Sales -> QBS_SighCast_Salesman",
+    "QBS_SighCast_Target -> QBS_SighCast_Salesman",
+    "QBS_SighCast_Time_To_Sell -> QBS_SighCast_Salesman",
+    "QBS_SighCast_Transfer_Request -> QBS_SighCast_Salesman",
+    "QBS_SighCast_Visits -> QBS_SighCast_Salesman"
+  ],
+  "measures": [
+    {
+      "name": "Loading Vol",
+      "expression": "(SUM(QBS_SighCast_Loading[Loading_QTY_Global])) "
+    },
+    {
+      "name": "Loading vs Requested  %",
+      "expression": "[Loading Vol]/[Requested Vol]"
+    },
+    {
+      "name": "Lost Loading",
+      "expression": "[Loading Vol] - [UnLoading Vol]"
+    },
+    {
+      "name": "Median_Actual_vs_Loading",
+      "expression": "MEDIANX(ALL(QBS_SighCast_Salesman[SalesmanNameE]), [Sales vs Loading %])"
+    },
+    {
+      "name": "Median_Actual_vs_Requested",
+      "expression": "MEDIANX(ALL(QBS_SighCast_Salesman[SalesmanNameE]), [Sales vs Requested  %])"
+    },
+    {
+      "name": "NetOut",
+      "expression": "[Loading Vol] - [UnLoading Vol]"
+    },
+    {
+      "name": "Requested Vol",
+      "expression": "(SUM(QBS_SighCast_Transfer_Request[RequestedQty]))"
+    },
+    {
+      "name": "Return %",
+      "expression": "[UnLoading Vol]/[Loading Vol]"
+    },
+    {
+      "name": "Sales vs Loading %",
+      "expression": "[Sales QTY Ton] / [Loading Vol]"
+    },
+    {
+      "name": "Sales vs Requested  %",
+      "expression": "[Sales QTY Ton] / [Requested Vol]"
+    },
+    {
+      "name": "UnLoading Vol",
+      "expression": "(SUM(QBS_SighCast_Loading[Unloading_QTY_Global]))"
+    },
+    {
+      "name": "% of Total",
+      "expression": "\nDIVIDE([Sales Val],[Total Sales Val])"
+    },
+    {
+      "name": "Color",
+      "expression": "\nIF([Product Rank] > [Pareto Cutoff Rank], \"#e7ecef\", \"#bbdefb\")"
+    },
+    {
+      "name": "Cumulative Revenue",
+      "expression": "\nIF(\n    ISINSCOPE('QBS_SighCast_Item'[Category1]),\n    CALCULATE(\n        [Sales Val],\n        TOPN([Product Rank],\n        ALLSELECTED('QBS_SighCast_Item'[Category1]),\n        [Sales Val])\n    ),\n    [Total Sales Val])"
+    },
+    {
+      "name": "Cumulative Revenue %",
+      "expression": "\nDIVIDE([Cumulative Revenue],[Total Sales Val])"
+    },
+    {
+      "name": "CustomerCount",
+      "expression": "CALCULATE(\n    DISTINCTCOUNT(\n        QBS_SighCast_Sales[CustomerNo]\n    )\n)"
+    },
+    {
+      "name": "Cutoff Cumulative Revenue",
+      "expression": "\nVar ClosestProduct = [Cutoff Product]\nRETURN\nIF(\n    SELECTEDVALUE(QBS_SighCast_Item[Category1]) = ClosestProduct,\n    [Cumulative Revenue],\n    blank()\n)"
+    },
+    {
+      "name": "Cutoff Product",
+      "expression": "\nVar TargetPercentage = [Pareto Value]\nVar ClosestProduct =\n    TOPN(\n        1,\n        ADDCOLUMNS(\n            SUMMARIZE(\n                ALLSELECTED('QBS_SighCast_Sales'),\n                QBS_SighCast_Item[Category1]\n            ),\n            \"CumulativeRevenuePercentage\",[Cumulative Revenue %],\n            \"Difference\",ABS([Cumulative Revenue %] - TargetPercentage)\n        ),\n        [Difference],ASC\n    )\n    RETURN\n    MAXX(\n        ClosestProduct,\n        QBS_SighCast_Item[Category1]\n    )"
+    },
+    {
+      "name": "Cutoff Product vs All Product",
+      "expression": "\n CALCULATE(\n    DIVIDE([Pareto Cutoff Rank],[Product Count])\n )"
+    },
+    {
+      "name": "Cutoff Rank",
+      "expression": "\nVAR closesProduct = [Cutoff Product]\nRETURN\nIF(\n    SELECTEDVALUE(QBS_SighCast_Item[Category1]) = closesProduct,\n    [Product Rank],\n    blank()\n)"
+    },
+    {
+      "name": "Cutoff Revenue %",
+      "expression": "\nVAR ClosestProduct = [Cutoff Product]\nRETURN\nIF(\n    SELECTEDVALUE(QBS_SighCast_Item[Category1]) = ClosestProduct,\n    [Cumulative Revenue %],\n    BLANK()\n)"
+    },
+    {
+      "name": "Cutoff Revenue GT%",
+      "expression": "\nVAR ClosestProduct = [Cutoff Product]\nRETURN\nIF(SELECTEDVALUE(QBS_SighCast_Item[Category1])=ClosestProduct,\n[Sales Val],\nBLANK()\n)/4"
+    },
+    {
+      "name": "Pareto Cutoff Rank",
+      "expression": "\nCALCULATE(\n    MAXX(VALUES(QBS_SighCast_Item[Category1]), [Cutoff Rank]),\n    ALLSELECTED(QBS_SighCast_Item)\n)"
+    },
+    {
+      "name": "Product Count",
+      "expression": "\nCALCULATE(\n    DISTINCTCOUNT('QBS_SighCast_Item'[BatchSupport]))"
+    },
+    {
+      "name": "Product Grouping",
+      "expression": "\nVAR ProductRevPct =\nCALCULATE([Cumulative Revenue %],\nALLEXCEPT('QBS_SighCast_Item',QBS_SighCast_Item[Category1])\n)\nRETURN\nIF(ProductRevPct <= [Pareto Value],VALUES(QBS_SighCast_Item[Category1]),\"Others\")"
+    },
+    {
+      "name": "Product Rank",
+      "expression": "\nif(\n    ISINSCOPE('QBS_SighCast_Item'[Category1]),\n    RANKX(\n        ALLSELECTED('QBS_SighCast_Item'[Category1]),\n        [Sales Val])\n)"
+    },
+    {
+      "name": "Route Count",
+      "expression": "\nCALCULATE(\n    DISTINCTCOUNT(\n        'QBS_SighCast_JourneyPlan'[AssignedTO]\n    )\n)"
+    },
+    {
+      "name": "% of Grand Filtered Total Brand",
+      "expression": "\nDIVIDE(\n    [Sales QTY Ton],\n    CALCULATE(\n        [Sales QTY Ton],\n        ALLSELECTED('QBS_SighCast_Item')\n    ),\n    0\n)"
+    },
+    {
+      "name": "% of Grand Filtered Total Segment",
+      "expression": "\nDIVIDE(\n    [Sales QTY Ton],\n    CALCULATE(\n        [Sales QTY Ton],\n        ALLSELECTED('QBS_SighCast_Customer'[Category])\n    ),\n    0\n)"
+    },
+    {
+      "name": "% of Total Val",
+      "expression": "\nDIVIDE([Sales Val],[Total Sales Val])"
+    },
+    {
+      "name": "3MOM Filters",
+      "expression": "ABS([Sales Current Month Val]) + ABS([Sales Previous Month Val]) + ABS([Sales Before Previous Month Val])"
+    },
+    {
+      "name": "Actual Sales Value",
+      "expression": "\n    DIVIDE(\n        CALCULATE(\n            [SalesBeforeTax],\n            FILTER(\n                DateDim,\n                YEAR(DateDim[Date]) = YEAR(TODAY()) &&\n                MONTH(DateDim[Date]) = MONTH(TODAY())\n            )\n        ),\n        1000\n    )"
+    },
+    {
+      "name": "BasketSize",
+      "expression": "\nDIVIDE (\n    CALCULATE (\n        [Sales QTY KG],\n        QBS_SighCast_Sales[OrderType] = 0\n    ),\n    CALCULATE (\n        DISTINCTCOUNT ( QBS_SighCast_Sales[OrderID] ),\n        QBS_SighCast_Sales[OrderType] = 0\n    )\n)"
+    },
+    {
+      "name": "Blank",
+      "expression": "BLANK()"
+    },
+    {
+      "name": "Current_O_Before_Previous Ratio",
+      "expression": "([Sales Current Month Val] / [Sales Before Previous Month Val]  )"
+    },
+    {
+      "name": "Current_O_Previous Ratio",
+      "expression": "([Sales Current Month Val] / [Sales Previous Month Val])"
+    },
+    {
+      "name": "Daily Average Calls",
+      "expression": "[Total Calles]/[ActualWorkingDaysToDate]"
+    },
+    {
+      "name": "Daily Salesman Average Val",
+      "expression": "[SalesBeforeTax] / [ActualWorkingDaysToDate]"
+    },
+    {
+      "name": "Daily Salesman Average Vol",
+      "expression": "[Sales QTY KG] / [ActualWorkingDaysToDate]"
+    },
+    {
+      "name": "DiscountVal",
+      "expression": "SUMX(QBS_SighCast_Sales,IF([FreeItem] = 0 , QBS_SighCast_Sales[PromotionsTotal],0) )"
+    },
+    {
+      "name": "DMoM % Growth",
+      "expression": "\nDIVIDE(\n    [DMoM Change]  ,\n    [Sales DPrevious Month QTY],\n    1\n)"
+    },
+    {
+      "name": "DMoM Change",
+      "expression": "\n[Sales DCurrent Month QTY] - [Sales DPrevious Month QTY]"
+    },
+    {
+      "name": "DMoM Ratio",
+      "expression": "\nDIVIDE(\n    [Sales DCurrent Month QTY],[Sales DPrevious Month QTY] \n)"
+    },
+    {
+      "name": "DropSize",
+      "expression": "\nDIVIDE (\n    CALCULATE (\n        [SalesBeforeTax],\n        QBS_SighCast_Sales[OrderType] = 0\n    ),\n    CALCULATE (\n        DISTINCTCOUNT ( QBS_SighCast_Sales[OrderID] ),\n        QBS_SighCast_Sales[OrderType] = 0\n    )\n)"
+    },
+    {
+      "name": "DropSize Segmentation",
+      "expression": "\nSWITCH(\n    TRUE(),\n    [Dropsize] >= 700, \"1. Large (≥ 700)\",\n    [Dropsize] >= 200 && [Dropsize] <= 699, \"2. Medium (200–699)\",\n    [Dropsize] < 200, \"3. Small (< 200)\",\n    \"N/A\"\n)"
+    },
+    {
+      "name": "FreeItem",
+      "expression": "SUMX(QBS_SighCast_Sales,IF(QBS_SighCast_Sales[FreeItem] = 1 , QBS_SighCast_Sales[PromotionsTotal],0)) "
+    },
+    {
+      "name": "Growth-Sales-Monthly",
+      "expression": "\nDIVIDE(\n    [Actual Sales Value] - [Sales Previous Month Val],\n    [Sales Previous Month Val],\n    0\n)"
+    },
+    {
+      "name": "Growth-Sales-Yearly",
+      "expression": "\nDIVIDE(\n    [Actual Sales Value] - [Sales Value Past Year],\n    [Sales Value Past Year],\n    0\n)"
+    },
+    {
+      "name": "LinePerCall",
+      "expression": "\nDIVIDE (\n    CALCULATE (\n        COUNT ( QBS_SighCast_Sales[ItemID] ),\n        QBS_SighCast_Sales[OrderType] = 0\n    ),\n    CALCULATE (\n        DISTINCTCOUNT ( QBS_SighCast_Sales[OrderID] ),\n        QBS_SighCast_Sales[OrderType] = 0\n    )\n)"
+    },
+    {
+      "name": "Lost Opportunities",
+      "expression": "\nVAR TargetVal = [SalesBeforeTax]      -- replace with your Target measure\nVAR ActualVal = [SalesBeforeTax]      -- your Actual measure\nRETURN\nMAX( TargetVal - ActualVal, 0 )"
+    },
+    {
+      "name": "LY Sales",
+      "expression": "CALCULATE([SalesBeforeTax],SAMEPERIODLASTYEAR('DateDim'[Date]))"
+    },
+    {
+      "name": "MoM % Growth",
+      "expression": "\nDIVIDE(\n    [Sales DCurrent Month QTY] - [Sales DPrevious Month QTY],\n    [Sales DPrevious Month QTY],\n    1\n)"
+    },
+    {
+      "name": "MoM Change",
+      "expression": "\n[Sales DCurrent Month QTY] - [Sales DPrevious Month QTY]"
+    },
+    {
+      "name": "MOM Filters",
+      "expression": "ABS([Sales DCurrent Month QTY]) + ABS([Sales DPrevious Month QTY])"
+    },
+    {
+      "name": "MoM Ratio",
+      "expression": "([Sales DCurrent Month QTY] / [Sales DPrevious Month QTY])"
+    },
+    {
+      "name": "Pareto Customer Cumulative % QTY",
+      "expression": "\nVAR CurrentCustomer = MAX ( QBS_SighCast_Customer[CustomerNo] )\nVAR Result =\n    DIVIDE (\n        SUMX (\n            FILTER (\n                ALL ( QBS_SighCast_Customer[CustomerNo] ),\n                [Sales QTY Ton] >= CALCULATE ( [Sales QTY Ton], QBS_SighCast_Customer[CustomerNo] = CurrentCustomer )\n            ),\n            [Sales QTY Ton]\n        ),\n        CALCULATE ( [Sales QTY Ton], ALL ( QBS_SighCast_Customer ) )\n    )\nRETURN Result"
+    },
+    {
+      "name": "Pareto Item Cumulative % QTY",
+      "expression": "\nVAR CurrentItem = MAX ( QBS_SighCast_Item[ItemNo] )\nVAR Result =\n    DIVIDE (\n        SUMX (\n            FILTER (\n                ALL ( QBS_SighCast_Item[ItemNo] ),\n                [Sales QTY Ton] >= CALCULATE ( [Sales QTY Ton], QBS_SighCast_Item[ItemNo] = CurrentItem )\n            ),\n            [Sales QTY Ton]\n        ),\n        CALCULATE ( [Sales QTY Ton], ALL ( QBS_SighCast_Item) )\n    )\nRETURN Result"
+    },
+    {
+      "name": "Returns",
+      "expression": "\nCALCULATE(\n    [Sales QTY Ton],\n    QBS_SighCast_Sales[OrderType] = 1\n)"
+    },
+    {
+      "name": "Returns %%",
+      "expression": "\nDIVIDE(\n    [Returns],\n    [Sales QTY Ton],\n    0\n)\n*-1"
+    },
+    {
+      "name": "Sales Before Previous Month QTY",
+      "expression": "\nVAR SelMaxDate =\n    MAX('DateDim'[Date])\n\nVAR TodayOrSel =\n    MIN(SelMaxDate, TODAY())\n\n-- Current month start\nVAR CurrentStartDate =\n    CALCULATE(\n        MIN('DateDim'[Date]),\n        FILTER(\n            ALL('DateDim'),\n            YEAR('DateDim'[Date]) = YEAR(TodayOrSel)\n            && MONTH('DateDim'[Date]) = MONTH(TodayOrSel)\n        )\n    )\n\n-- Is current month complete?\nVAR IsMonthComplete =\n    TodayOrSel = EOMONTH(TodayOrSel, 0)\n\n-- Previous month start\nVAR PreviousStartDate =\n    CALCULATE(\n        MIN('DateDim'[Date]),\n        FILTER(\n            ALL('DateDim'),\n            YEAR('DateDim'[Date]) = YEAR( EDATE(CurrentStartDate, -1) )\n            && MONTH('DateDim'[Date]) = MONTH( EDATE(CurrentStartDate, -2) )\n        )\n    )\n\n-- If incomplete: same day in previous month (safe)\nVAR SameDayPrevMonth =\nVAR TargetDay = DAY(TodayOrSel)\nVAR PrevYear  = YEAR(PreviousStartDate)\nVAR PrevMonth = MONTH(PreviousStartDate)\nVAR Try =\n    DATE(PrevYear, PrevMonth, TargetDay)\nRETURN\n    IF(\n        MONTH(Try) = PrevMonth,\n        Try,\n        EOMONTH(TodayOrSel, -2)\n    )\n\n-- Final PreviousEndDate:\nVAR PreviousEndDate =\n    IF(\n        IsMonthComplete,\n        EOMONTH(TodayOrSel, -2),     -- full previous month\n        SameDayPrevMonth             -- same day logic\n    )\n\n-- Calculate Qty\nVAR Prev =\n    CALCULATE(\n        [Sales QTY Ton],\n        DATESBETWEEN(\n            'DateDim'[Date],\n            PreviousStartDate,\n            PreviousEndDate\n        )\n    )\n\nRETURN IF(Prev = 0, 0, Prev)\n"
+    },
+    {
+      "name": "Sales Before Previous Month Val",
+      "expression": "\nVAR SelMaxDate =\n    MAX('DateDim'[Date])\n\nVAR TodayOrSel =\n    MIN(SelMaxDate, TODAY())\n\n-- Current month start\nVAR CurrentStartDate =\n    CALCULATE(\n        MIN('DateDim'[Date]),\n        FILTER(\n            ALL('DateDim'),\n            YEAR('DateDim'[Date]) = YEAR(TodayOrSel)\n            && MONTH('DateDim'[Date]) = MONTH(TodayOrSel)\n        )\n    )\n\n-- Is current month complete?\nVAR IsMonthComplete =\n    TodayOrSel = EOMONTH(TodayOrSel, 0)\n\n-- Previous month start\nVAR PreviousStartDate =\n    CALCULATE(\n        MIN('DateDim'[Date]),\n        FILTER(\n            ALL('DateDim'),\n            YEAR('DateDim'[Date]) = YEAR( EDATE(CurrentStartDate, -1) )\n            && MONTH('DateDim'[Date]) = MONTH( EDATE(CurrentStartDate, -2) )\n        )\n    )\n\n-- If incomplete: same day in previous month (safe)\nVAR SameDayPrevMonth =\nVAR TargetDay = DAY(TodayOrSel)\nVAR PrevYear  = YEAR(PreviousStartDate)\nVAR PrevMonth = MONTH(PreviousStartDate)\nVAR Try =\n    DATE(PrevYear, PrevMonth, TargetDay)\nRETURN\n    IF(\n        MONTH(Try) = PrevMonth,\n        Try,\n        EOMONTH(TodayOrSel, -2)\n    )\n\n-- Final PreviousEndDate:\nVAR PreviousEndDate =\n    IF(\n        IsMonthComplete,\n        EOMONTH(TodayOrSel, -2),     -- full previous month\n        SameDayPrevMonth             -- same day logic\n    )\n\n-- Calculate Qty\nVAR Prev =\n    CALCULATE(\n        [SalesBeforeTax],\n        DATESBETWEEN(\n            'DateDim'[Date],\n            PreviousStartDate,\n            PreviousEndDate\n        )\n    )\n\nRETURN IF(Prev = 0, 0, Prev)\n"
+    },
+    {
+      "name": "Sales Current Month QTY",
+      "expression": "\n[Sales QTY Ton]"
+    },
+    {
+      "name": "Sales Current Month Val",
+      "expression": "[SalesBeforeTax]"
+    },
+    {
+      "name": "Sales DCurrent Month QTY",
+      "expression": "\n[Sales QTY Ton]"
+    },
+    {
+      "name": "Sales DCurrent Month Val",
+      "expression": "[SalesBeforeTax]"
+    },
+    {
+      "name": "Sales DCurrent MTD QTY",
+      "expression": "\nCALCULATE(\n    [Sales QTY Ton],\n    DATESMTD('DateDim'[Date])\n)"
+    },
+    {
+      "name": "Sales DPrevious Month Full QTY",
+      "expression": "\nCALCULATE(\n    [Sales QTY Ton],\n    PREVIOUSMONTH( 'DateDim'[Date] )\n)"
+    },
+    {
+      "name": "Sales DPrevious Month QTY",
+      "expression": "\nVAR SelMaxDate =\n    MAX('DateDim'[Date])\n\nVAR TodayOrSel =\n    MIN(SelMaxDate, TODAY())\n\n-- Current month start\nVAR CurrentStartDate =\n    CALCULATE(\n        MIN('DateDim'[Date]),\n        FILTER(\n            ALL('DateDim'),\n            YEAR('DateDim'[Date]) = YEAR(TodayOrSel)\n            && MONTH('DateDim'[Date]) = MONTH(TodayOrSel)\n        )\n    )\n\n-- Is current month complete?\nVAR IsMonthComplete =\n    TodayOrSel = EOMONTH(TodayOrSel, 0)\n\n-- Previous month start\nVAR PreviousStartDate =\n    CALCULATE(\n        MIN('DateDim'[Date]),\n        FILTER(\n            ALL('DateDim'),\n            YEAR('DateDim'[Date]) = YEAR( EDATE(CurrentStartDate, -1) )\n            && MONTH('DateDim'[Date]) = MONTH( EDATE(CurrentStartDate, -1) )\n        )\n    )\n\n-- If incomplete: same day in previous month (safe)\nVAR SameDayPrevMonth =\nVAR TargetDay = DAY(TodayOrSel)\nVAR PrevYear  = YEAR(PreviousStartDate)\nVAR PrevMonth = MONTH(PreviousStartDate)\nVAR Try =\n    DATE(PrevYear, PrevMonth, TargetDay)\nRETURN\n    IF(\n        MONTH(Try) = PrevMonth,\n        Try,\n        EOMONTH(TodayOrSel, -1)\n    )\n\n-- Final PreviousEndDate:\nVAR PreviousEndDate =\n    IF(\n        IsMonthComplete,\n        EOMONTH(TodayOrSel, -1),     -- full previous month\n        SameDayPrevMonth             -- same day logic\n    )\n\n-- Calculate Qty\nVAR Prev =\n    CALCULATE(\n        [Sales QTY Ton],\n        DATESBETWEEN(\n            'DateDim'[Date],\n            PreviousStartDate,\n            PreviousEndDate\n        )\n    )\n\nRETURN IF(Prev = 0, 0, Prev)\n"
+    },
+    {
+      "name": "Sales Previous Month QTY",
+      "expression": "\nVAR SelMaxDate =\n    MAX('DateDim'[Date])\n\nVAR TodayOrSel =\n    MIN(SelMaxDate, TODAY())\n\n-- Current month start\nVAR CurrentStartDate =\n    CALCULATE(\n        MIN('DateDim'[Date]),\n        FILTER(\n            ALL('DateDim'),\n            YEAR('DateDim'[Date]) = YEAR(TodayOrSel)\n            && MONTH('DateDim'[Date]) = MONTH(TodayOrSel)\n        )\n    )\n\n-- Is current month complete?\nVAR IsMonthComplete =\n    TodayOrSel = EOMONTH(TodayOrSel, 0)\n\n-- Previous month start\nVAR PreviousStartDate =\n    CALCULATE(\n        MIN('DateDim'[Date]),\n        FILTER(\n            ALL('DateDim'),\n            YEAR('DateDim'[Date]) = YEAR( EDATE(CurrentStartDate, -1) )\n            && MONTH('DateDim'[Date]) = MONTH( EDATE(CurrentStartDate, -1) )\n        )\n    )\n\n-- If incomplete: same day in previous month (safe)\nVAR SameDayPrevMonth =\nVAR TargetDay = DAY(TodayOrSel)\nVAR PrevYear  = YEAR(PreviousStartDate)\nVAR PrevMonth = MONTH(PreviousStartDate)\nVAR Try =\n    DATE(PrevYear, PrevMonth, TargetDay)\nRETURN\n    IF(\n        MONTH(Try) = PrevMonth,\n        Try,\n        EOMONTH(TodayOrSel, -1)\n    )\n\n-- Final PreviousEndDate:\nVAR PreviousEndDate =\n    IF(\n        IsMonthComplete,\n        EOMONTH(TodayOrSel, -1),     -- full previous month\n        SameDayPrevMonth             -- same day logic\n    )\n\n-- Calculate Qty\nVAR Prev =\n    CALCULATE(\n        [Sales QTY Ton],\n        DATESBETWEEN(\n            'DateDim'[Date],\n            PreviousStartDate,\n            PreviousEndDate\n        )\n    )\n\nRETURN IF(Prev = 0, 0, Prev)"
+    },
+    {
+      "name": "Sales Previous Month Val",
+      "expression": "\nVAR SelMaxDate =\n    MAX('DateDim'[Date])\n\nVAR TodayOrSel =\n    MIN(SelMaxDate, TODAY())\n\n-- Current month start\nVAR CurrentStartDate =\n    CALCULATE(\n        MIN('DateDim'[Date]),\n        FILTER(\n            ALL('DateDim'),\n            YEAR('DateDim'[Date]) = YEAR(TodayOrSel)\n            && MONTH('DateDim'[Date]) = MONTH(TodayOrSel)\n        )\n    )\n\n-- Is current month complete?\nVAR IsMonthComplete =\n    TodayOrSel = EOMONTH(TodayOrSel, 0)\n\n-- Previous month start\nVAR PreviousStartDate =\n    CALCULATE(\n        MIN('DateDim'[Date]),\n        FILTER(\n            ALL('DateDim'),\n            YEAR('DateDim'[Date]) = YEAR( EDATE(CurrentStartDate, -1) )\n            && MONTH('DateDim'[Date]) = MONTH( EDATE(CurrentStartDate, -1) )\n        )\n    )\n\n-- If incomplete: same day in previous month (safe)\nVAR SameDayPrevMonth =\nVAR TargetDay = DAY(TodayOrSel)\nVAR PrevYear  = YEAR(PreviousStartDate)\nVAR PrevMonth = MONTH(PreviousStartDate)\nVAR Try =\n    DATE(PrevYear, PrevMonth, TargetDay)\nRETURN\n    IF(\n        MONTH(Try) = PrevMonth,\n        Try,\n        EOMONTH(TodayOrSel, -1)\n    )\n\n-- Final PreviousEndDate:\nVAR PreviousEndDate =\n    IF(\n        IsMonthComplete,\n        EOMONTH(TodayOrSel, -1),     -- full previous month\n        SameDayPrevMonth             -- same day logic\n    )\n\n-- Calculate Qty\nVAR Prev =\n    CALCULATE(\n        [SalesBeforeTax],\n        DATESBETWEEN(\n            'DateDim'[Date],\n            PreviousStartDate,\n            PreviousEndDate\n        )\n    )\n\nRETURN IF(Prev = 0, 0, Prev)\n"
+    },
+    {
+      "name": "Sales QTY KG",
+      "expression": "SUM(QBS_SighCast_Sales[GlobalQty])"
+    },
+    {
+      "name": "Sales QTY Ton",
+      "expression": "[Sales QTY KG] /1000"
+    },
+    {
+      "name": "Sales Val",
+      "expression": "[SalesBeforeTax]"
+    },
+    {
+      "name": "Sales Value Past Year",
+      "expression": "\nCALCULATE(\n    [SalesBeforeTax],\n    FILTER(\n        ALL(DateDim),\n        DateDim[Date] >= DATE(YEAR(TODAY()) - 1, MONTH(TODAY()), 1) &&\n        DateDim[Date] <= DATE(YEAR(TODAY()) - 1, MONTH(TODAY()), DAY(TODAY()))\n    )\n)"
+    },
+    {
+      "name": "SalesBeforeTax",
+      "expression": "SUMX(\n    QBS_SighCast_Sales,\n    (QBS_SighCast_Sales[BaseQty] * QBS_SighCast_Sales[UnitPrice]) + QBS_SighCast_Sales[PromotionsTotal])"
+    },
+    {
+      "name": "SalesChange",
+      "expression": "\nVAR CurrentMonthSales =\n    [SalesBeforeTax]\n\nVAR PreviousMonthSales =\n    CALCULATE(\n        [SalesBeforeTax],\n        DATEADD(DateDim[Date], -1, MONTH)\n    )\n\nRETURN\nIF(\n    NOT ISBLANK(PreviousMonthSales),\n    DIVIDE(\n        CurrentMonthSales - PreviousMonthSales,\n        PreviousMonthSales\n    ),\n    0\n)"
+    },
+    {
+      "name": "SalesChange_Day",
+      "expression": "\n\nDIVIDE(\n    CALCULATE([SalesBeforeTax]) -\n    CALCULATE([SalesBeforeTax], DATEADD(DateDim[Date], -1, DAY)),\n    CALCULATE([SalesBeforeTax], DATEADD(DateDim[Date], -1, DAY)),\n    0\n)"
+    },
+    {
+      "name": "SalesChange_Week",
+      "expression": "\nVAR CurrentWeekSales =\n    CALCULATE(\n         [SalesBeforeTax],\n        ALLEXCEPT(DateDim, DateDim[WeekNumber], DateDim[Year])\n    )\n\nVAR PrevWeekSales =\n    CALCULATE(\n         [SalesBeforeTax],\n        FILTER(\n            ALL(DateDim),\n            DateDim[Year] = MAX(DateDim[Year]) &&\n            DateDim[WeekNumber] = MAX(DateDim[WeekNumber]) - 1\n        )\n    )\n\nRETURN\n    DIVIDE(CurrentWeekSales - PrevWeekSales, PrevWeekSales)"
+    },
+    {
+      "name": "SalesChange_WeekAndDay",
+      "expression": "\nVAR CurrentDate = MAX( DateDim[Date] )\nVAR CurrentWeek = MAX( DateDim[WeekNumber] )\nVAR CurrentYear = MAX( DateDim[Year] )\n\nVAR CurrentDaySales =\n    CALCULATE(\n         [SalesBeforeTax],\n        FILTER( ALLSELECTED( DateDim ), DateDim[Date] = CurrentDate )\n    )\n\nVAR PrevDaySales =\n    CALCULATE(\n         [SalesBeforeTax],\n        DATEADD( DateDim[Date], -1, DAY )\n    )\n\nVAR PrevWeekSales =\n    CALCULATE(\n        [SalesBeforeTax],\n        FILTER(\n            ALL( DateDim ),\n            ( DateDim[Year] = CurrentYear && DateDim[WeekNumber] = CurrentWeek - 1 )\n            || ( DateDim[Year] = CurrentYear - 1 && DateDim[WeekNumber] = 52 && CurrentWeek = 1 )\n        )\n    )\n\nVAR DayChange =\n    DIVIDE( CurrentDaySales - PrevDaySales, PrevDaySales, 0 )\n\nVAR WeekChange =\n    DIVIDE( CurrentDaySales - PrevWeekSales, PrevWeekSales, 0 )\n\nRETURN\n    DayChange + WeekChange"
+    },
+    {
+      "name": "Total Sales Val",
+      "expression": "\nCALCULATE([Sales Val],\nALLSELECTED('QBS_SighCast_Sales')\n)"
+    },
+    {
+      "name": "UnitPrice_N",
+      "expression": "\nDIVIDE(\n    [SalesBeforeTax],\n    [Sales QTY KG]\n)"
+    },
+    {
+      "name": "Average Sales per Segment",
+      "expression": "\n CALCULATE(\n    [SalesBeforeTax],\n    ALLEXCEPT(QBS_SighCast_Customer,QBS_SighCast_Customer[Branchid]),\n    REMOVEFILTERS(QBS_SighCast_Sales[InvoiceAccount])\n) /\n\nCALCULATE(\n    DISTINCTCOUNT(QBS_SighCast_Sales[InvoiceAccount]),\n    ALLEXCEPT(QBS_SighCast_Customer, QBS_SighCast_Customer[Branchid]),\n    REMOVEFILTERS(QBS_SighCast_Sales[InvoiceAccount])\n)"
+    },
+    {
+      "name": "Route per Segment",
+      "expression": "\nVAR CurrentSegment = SELECTEDVALUE(QBS_SighCast_Customer[Branchid])\nVAR CustomersInSegment =\n    CALCULATETABLE(\n        VALUES(QBS_SighCast_Customer[CustomerNo]),\n        QBS_SighCast_Customer[Branchid] = CurrentSegment\n    )\nVAR JourneyPlansForCustomers =\n    CALCULATETABLE(\n        VALUES(QBS_SighCast_JPCustomer[JPID]),\n        QBS_SighCast_JPCustomer[CustomerID] IN CustomersInSegment\n    )\nVAR RoutesForSegment =\n    CALCULATETABLE(\n        VALUES(QBS_SighCast_JourneyPlan[RouteID]),\n        QBS_SighCast_JourneyPlan[JPID] IN JourneyPlansForCustomers\n    )\nRETURN\nCOUNTROWS(RoutesForSegment)"
+    },
+    {
+      "name": "Sales vs Segment Ratio",
+      "expression": "\nVAR Ratio = DIVIDE(\n     [SalesBeforeTax],\n    [Average Sales per Segment]\n)\n\nRETURN\nSWITCH(\n    TRUE(),\n    ISBLANK(Ratio), BLANK(),\n    Ratio < 0.3, \"Need Improvement\",\n    Ratio > 2.0, \"Change Segment\",\n    \"Maintain\"\n)\n"
+    },
+    {
+      "name": "Segments Per Route",
+      "expression": "\n\nVAR Salesman = SELECTEDVALUE(QBS_SighCast_Salesman[SalesmanNo])\nVAR CustomersInRoute =\n    CALCULATETABLE(\n        VALUES(QBS_SighCast_Customer[CustomerNo]),\n        FILTER(\n            ALL(QBS_SighCast_JPCustomer),\n            QBS_SighCast_JPCustomer[JPID] IN\n                CALCULATETABLE(\n                    VALUES(QBS_SighCast_JourneyPlan[JPID]),\n                    QBS_SighCast_Salesman[SalesmanNo] = Salesman\n                )\n        )\n    )\nRETURN\nCALCULATE(\n    DISTINCTCOUNT(QBS_SighCast_Customer[Branchid]),\n    KEEPFILTERS(QBS_SighCast_Customer[CustomerNo] IN CustomersInRoute)\n)\n"
+    },
+    {
+      "name": "%ActualWorkingDaysToDate",
+      "expression": "DIVIDE([ActualWorkingDaysToDate],SUM(DateDim[IsWorkingDayVal])) "
+    },
+    {
+      "name": "DailyTargetQTY",
+      "expression": "\nDIVIDE (\n    CALCULATE (\n        SUM ( QBS_SighCast_Target[Target] ),\n       QBS_SighCast_Target[TargetID] = -3\n    ),\n    [TotalWorkingDays]\n)"
+    },
+    {
+      "name": "DailyTargetVal",
+      "expression": "\nDIVIDE (\n    CALCULATE (\n        SUM ( QBS_SighCast_Target[Target] ),\n       QBS_SighCast_Target[TargetID] = 0\n    ),\n    [TotalWorkingDays]\n)"
+    },
+    {
+      "name": "MTDTargetQTY",
+      "expression": "\n(VAR TotalQTYTarget =\n    [Target QTY]\nVAR TotalWorkingDays =\n    [TotalWorkingDays]\nRETURN\n    DIVIDE ( TotalQTYTarget, TotalWorkingDays )) * [ActualWorkingDaysToDate]"
+    },
+    {
+      "name": "MTDTargetVal",
+      "expression": "\n(VAR TotalValTarget =\n    [Target Val]\nVAR TotalWorkingDays =\n    [TotalWorkingDays]\nRETURN\n    DIVIDE ( TotalValTarget, TotalWorkingDays )) * [ActualWorkingDaysToDate]"
+    },
+    {
+      "name": "Target QTY",
+      "expression": "SUMX(FILTER(QBS_SighCast_Target, QBS_SighCast_Target[TargetId] = -3), QBS_SighCast_Target[Target])"
+    },
+    {
+      "name": "Target Val",
+      "expression": "SUMX(FILTER(QBS_SighCast_Target, QBS_SighCast_Target[TargetId] = 0), QBS_SighCast_Target[Target])"
+    },
+    {
+      "name": "Target Vs Sales Daily QTY %%",
+      "expression": "\nDIVIDE(\n    SUM(QBS_SighCast_Sales[BaseQty]),\n    CALCULATE(\n        SUM(QBS_SighCast_Target[Target]),\n        FILTER(\n            QBS_SighCast_Target,\n            QBS_SighCast_Target[Targetid] = -3\n        ),\n        VALUES(QBS_SighCast_Sales[DueDate])\n    ),\n    0\n)"
+    },
+    {
+      "name": "Target Vs Sales Daily Val %%",
+      "expression": "\nDIVIDE(\n    SUM(QBS_SighCast_Sales[LineTotal]),\n    [DailyTargetVal],\n    0\n)"
+    },
+    {
+      "name": "Target Vs Sales QTY %%",
+      "expression": "\nDIVIDE(\n    SUM(QBS_SighCast_Sales[BaseQty]),\n    [Target QTY],\n    0\n)"
+    },
+    {
+      "name": "Target Vs Sales Val %%",
+      "expression": "\nDIVIDE(\n    SUM(QBS_SighCast_Sales[LineTotal]),\n    [Target Val],\n    0\n)"
+    },
+    {
+      "name": "TargetQTY",
+      "expression": "\nCALCULATE (\n    SUM ( QBS_SighCast_Target[Target] ),\n   QBS_SighCast_Target[TargetID] = -3\n)"
+    },
+    {
+      "name": "TargetVal",
+      "expression": "\nCALCULATE (\n    SUM ( QBS_SighCast_Target[Target] ),\n    QBS_SighCast_Target[TargetID] = 0\n)"
+    },
+    {
+      "name": "Variable_Daily_Target_QTY",
+      "expression": "\nDIVIDE(\n    [MTDTargetQTY] - SUM(QBS_SighCast_Sales[BaseQty]),\n    [RemainingWorkingDays]\n)\n+ [DailyTargetQTY]"
+    },
+    {
+      "name": "Variable_Daily_Target_Val",
+      "expression": "\nDIVIDE(\n    [MTDTargetVal] - SUM(QBS_SighCast_Sales[LineTotal]),\n    [RemainingWorkingDays]\n)\n+ [DailyTargetVal]"
+    },
+    {
+      "name": "Break",
+      "expression": "30"
+    },
+    {
+      "name": "Break Avg",
+      "expression": "\nVAR TotalMinutes = [Break]   \nVAR Hours = INT ( TotalMinutes / 60 )\nVAR Minutes = MOD ( TotalMinutes, 60 )\nRETURN\nFORMAT ( Hours, \"00\" ) & \":\" & FORMAT ( Minutes, \"00\" )"
+    },
+    {
+      "name": "CI/CO Avg",
+      "expression": "\nVAR TotalMinutes = AVERAGE(QBS_SighCast_Time_To_Sell[CI/CO])   \nVAR Hours = INT ( TotalMinutes / 60 )\nVAR Minutes = MOD ( TotalMinutes, 60 )\nRETURN\nFORMAT ( Hours, \"00\" ) & \":\" & FORMAT ( Minutes, \"00\" )"
+    },
+    {
+      "name": "Travel Avg",
+      "expression": "\nVAR TotalMinutes = AVERAGE(QBS_SighCast_Time_To_Sell[Travel])   \nVAR Hours = INT ( TotalMinutes / 60 )\nVAR Minutes = MOD ( TotalMinutes, 60 )\nRETURN\nFORMAT ( Hours, \"00\" ) & \":\" & FORMAT ( Minutes, \"00\" )"
+    },
+    {
+      "name": "Non Selling",
+      "expression": "AVERAGE(QBS_SighCast_Time_To_Sell[CI/CO]) + AVERAGE(QBS_SighCast_Time_To_Sell[Stem]) + AVERAGE(QBS_SighCast_Time_To_Sell[Travel]) + [Break]"
+    },
+    {
+      "name": "Non Selling Avg",
+      "expression": "\nVAR TotalMinutes = [Non Selling]   \nVAR Hours = INT ( TotalMinutes / 60 )\nVAR Minutes = MOD ( TotalMinutes, 60 )\nRETURN\nFORMAT ( Hours, \"00\" ) & \":\" & FORMAT ( Minutes, \"00\" )"
+    },
+    {
+      "name": "Selling Avg",
+      "expression": "\nVAR TotalMinutes = AVERAGE(QBS_SighCast_Time_To_Sell[Selling_Time])   \nVAR Hours = INT ( TotalMinutes / 60 )\nVAR Minutes = MOD ( TotalMinutes, 60 )\nRETURN\nFORMAT ( Hours, \"00\" ) & \":\" & FORMAT ( Minutes, \"00\" )"
+    },
+    {
+      "name": "Selling_Fixed Avg",
+      "expression": "\nVAR TotalMinutes = AVERAGE(QBS_SighCast_Time_To_Sell[Selling_Fixed])   \nVAR Hours = INT ( TotalMinutes / 60 )\nVAR Minutes = MOD ( TotalMinutes, 60 )\nRETURN\nFORMAT ( Hours, \"00\" ) & \":\" & FORMAT ( Minutes, \"00\" )"
+    },
+    {
+      "name": "Selling_Variable Avg",
+      "expression": "\nVAR TotalMinutes = AVERAGE(QBS_SighCast_Time_To_Sell[Selling_Variable])   \nVAR Hours = INT ( TotalMinutes / 60 )\nVAR Minutes = MOD ( TotalMinutes, 60 )\nRETURN\nFORMAT ( Hours, \"00\" ) & \":\" & FORMAT ( Minutes, \"00\" )"
+    },
+    {
+      "name": "Standard_Break",
+      "expression": "8"
+    },
+    {
+      "name": "Standard_CI/CO",
+      "expression": "10"
+    },
+    {
+      "name": "Standard_Drive",
+      "expression": "12"
+    },
+    {
+      "name": "Standard_Fixed",
+      "expression": "18"
+    },
+    {
+      "name": "Standard_Stem",
+      "expression": "10"
+    },
+    {
+      "name": "Standard_TimeToGrow",
+      "expression": "8"
+    },
+    {
+      "name": "Standard_Variable",
+      "expression": "34"
+    },
+    {
+      "name": "Stem Avg",
+      "expression": "\nVAR TotalMinutes = AVERAGE(QBS_SighCast_Time_To_Sell[Stem])   \nVAR Hours = INT ( TotalMinutes / 60 )\nVAR Minutes = MOD ( TotalMinutes, 60 )\nRETURN\nFORMAT ( Hours, \"00\" ) & \":\" & FORMAT ( Minutes, \"00\" )"
+    },
+    {
+      "name": "ActualWorkingDaysToDate",
+      "expression": "\nCOUNTROWS(\n    FILTER(\n        DateDim,\n        DateDim[Date] < TODAY() && DateDim[IsWorkingDay] = TRUE()\n        \n    )\n)"
+    },
+    {
+      "name": "DaysGoneOfMonth",
+      "expression": "DAY(TODAY()) "
+    },
+    {
+      "name": "RemainingWorkingDays",
+      "expression": "\n    VAR ActualWorkingDaysToDate = [ActualWorkingDaysToDate]  \n    VAR TotalWorkingDays = SUM(DateDim[IsWorkingDayVal]) \n    RETURN\n    ABS(ActualWorkingDaysToDate - TotalWorkingDays)"
+    },
+    {
+      "name": "ShowValueForDates",
+      "expression": "\nVAR LastDateWithData =\n    CALCULATE (\n        MAX ( 'QBS_SighCast_Sales'[DueDate] ),\n        REMOVEFILTERS ()\n    )\nVAR FirstDateVisible =\n    MIN ( 'DateDim'[Date] )\n    // CALCULATE(\n    //     MIN ( 'Sales'[SessionClosingDate] ),\n    //     REMOVEFILTERS()\n    // )\nVAR Result =\n    FirstDateVisible <= LastDateWithData\nRETURN\n    Result"
+    },
+    {
+      "name": "TotalWorkingDays",
+      "expression": "\nCOUNTROWS (\n    FILTER (\n        DateDim,\n        DateDim[IsWorkingDay] = TRUE()\n    )\n)"
+    },
+    {
+      "name": "ActualSuccessRate",
+      "expression": "\nDIVIDE(\n    [Positive VisitsUnique],\n    DISTINCTCOUNT(QBS_SighCast_JPCustomer[CustomerID]),\n    0\n)"
+    },
+    {
+      "name": "AverageVisitValue",
+      "expression": "\nDIVIDE(\n    [SalesBeforeTax],\n    [Positive Visits],\n    0\n)"
+    },
+    {
+      "name": "AVGVisitsPerDay",
+      "expression": "DIVIDE(COUNT(QBS_SighCast_Visits[SalesmanNo]), DISTINCTCOUNT(QBS_SighCast_Visits[TripDate]))"
+    },
+    {
+      "name": "Coverage",
+      "expression": "\nDIVIDE(\nDISTINCTCOUNT(QBS_SighCast_Sales[CustomerNo])\n,DISTINCTCOUNT(QBS_SighCast_JPCustomer[CustomerID])\n\n)"
+    },
+    {
+      "name": "Coveragetest",
+      "expression": "\n\nCOUNTROWS(\n    SUMMARIZE(\n        QBS_SighCast_Sales,\n        QBS_SighCast_Sales[CustomerNo],\n        [MonthnYear]\n    )\n)"
+    },
+    {
+      "name": "CustomerRetentionRate",
+      "expression": "\nDIVIDE (\n    CALCULATE (\n        COUNTROWS (\n            FILTER (\n                SUMMARIZE (\n                    FILTER ( QBS_SighCast_Sales, QBS_SighCast_Sales[OrderType] = 0 ),\n                    QBS_SighCast_Sales[CustomerNo],\n                    \"PurchaseCount\", DISTINCTCOUNT ( QBS_SighCast_Sales[InvoiceDate] )\n                ),\n                [PurchaseCount] > 1\n            )\n        )\n    ),\n    CALCULATE (\n        DISTINCTCOUNT ( QBS_SighCast_Sales[CustomerNo] ),\n        QBS_SighCast_Sales[OrderType] = 0\n    )\n)"
+    },
+    {
+      "name": "Negative Visits",
+      "expression": "\nCOALESCE(\n    CALCULATE(\n        COUNT(QBS_SighCast_Visits[CustomerNo]),\n        QBS_SighCast_Visits[Visit status] = \"Negative\"\n    ),\n    0\n)"
+    },
+    {
+      "name": "Negative VisitsUnique",
+      "expression": "\nCOALESCE(\nCOUNTROWS(\n    SUMMARIZE(FILTER(\n           QBS_SighCast_Visits,\n            QBS_SighCast_Visits[Visit status] = \"Negative\"\n        )\n        ,\n       QBS_SighCast_Visits[Customerno],\n        [TripDate]\n    )\n),   0\n)"
+    },
+    {
+      "name": "OutRoute",
+      "expression": "SUMX(QBS_SighCast_Visits, if(QBS_SighCast_Visits[InRoute] = 0, 1,0))"
+    },
+    {
+      "name": "Planned Visits",
+      "expression": "\nVAR SelectedDay = SELECTEDVALUE ( 'DateDim'[Date] )\nVAR IsSingleDate = NOT ISBLANK ( SelectedDay )\nVAR WeekDayName = FORMAT ( SelectedDay, \"ddd\" )\n\nRETURN\nIF (\n    IsSingleDate,\n    -- Case 1: One specific date selected\n    SWITCH (\n        TRUE(),\n        WeekDayName = \"Sat\", CALCULATE ( COUNTROWS ( FILTER ( QBS_SighCast_JPCustomer, QBS_SighCast_JPCustomer[sat] = 1 ) ) ),\n        WeekDayName = \"Sun\", CALCULATE ( COUNTROWS ( FILTER ( QBS_SighCast_JPCustomer, QBS_SighCast_JPCustomer[sun] = 1 ) ) ),\n        WeekDayName = \"Mon\", CALCULATE ( COUNTROWS ( FILTER ( QBS_SighCast_JPCustomer, QBS_SighCast_JPCustomer[mon] = 1 ) ) ),\n        WeekDayName = \"Tue\", CALCULATE ( COUNTROWS ( FILTER ( QBS_SighCast_JPCustomer, QBS_SighCast_JPCustomer[tue] = 1 ) ) ),\n        WeekDayName = \"Wed\", CALCULATE ( COUNTROWS ( FILTER ( QBS_SighCast_JPCustomer, QBS_SighCast_JPCustomer[wed] = 1 ) ) ),\n        WeekDayName = \"Thu\", CALCULATE ( COUNTROWS ( FILTER ( QBS_SighCast_JPCustomer, QBS_SighCast_JPCustomer[thu] = 1 ) ) ),\n        WeekDayName = \"Fri\", CALCULATE ( COUNTROWS ( FILTER ( QBS_SighCast_JPCustomer, QBS_SighCast_JPCustomer[fri] = 1 ) ) ),\n        BLANK()\n    ),\n\n    -- Case 2: Month or multiple days selected\n    CALCULATE (\n        SUMX (\n            ADDCOLUMNS (\n                QBS_SighCast_JPCustomer,\n                \"DaysCount\",\n                    QBS_SighCast_JPCustomer[sat] +\n                    QBS_SighCast_JPCustomer[sun] +\n                    QBS_SighCast_JPCustomer[mon] +\n                    QBS_SighCast_JPCustomer[tue] +\n                    QBS_SighCast_JPCustomer[wed] +\n                    QBS_SighCast_JPCustomer[thu] +\n                    QBS_SighCast_JPCustomer[fri]\n            ),\n            [DaysCount] * QBS_SighCast_JPCustomer[Frequency]\n        )\n    )\n)\n"
+    },
+    {
+      "name": "Positive Visits",
+      "expression": "\n\nCALCULATE(\n    COUNT(QBS_SighCast_Visits[CustomerNo]),\n    QBS_SighCast_Visits[Visit status] = \"Positive\"\n)"
+    },
+    {
+      "name": "Positive VisitsUnique",
+      "expression": "\nCOUNTROWS(\n    SUMMARIZE(FILTER(\n            QBS_SighCast_Visits,\n            QBS_SighCast_Visits[Visit status] = \"Positive\"\n        )\n        ,\n        QBS_SighCast_Visits[Customerno],\n        [TripDate]\n    )\n)"
+    },
+    {
+      "name": "SuccessRate",
+      "expression": "\nDIVIDE(\n    [Positive VisitsUnique],\n    [Planned Visits],\n    0\n)"
+    },
+    {
+      "name": "Total Calles",
+      "expression": "DISTINCTCOUNTNOBLANK(QBS_SighCast_Sales[OrderID])"
+    },
+    {
+      "name": "COGS",
+      "expression": "\n    SUM ( QBS_SighCast_Sales[Cogs] )"
+    },
+    {
+      "name": "COGS %",
+      "expression": "\nDIVIDE(\n    [COGS],\n    [Total Sales Value with ExchangeRate],\n    0\n)"
+    },
+    {
+      "name": "COGS Change %",
+      "expression": "\nDIVIDE (\n    [COGS] - [Previous COGS],\n    [Previous COGS],\n    0\n) "
+    },
+    {
+      "name": "COGS Diff",
+      "expression": "[UnitPrice_N]-[Cost Per Unit]"
+    },
+    {
+      "name": "COGS EGP",
+      "expression": "\nCALCULATE (\n    SUM ( QBS_SighCast_Sales[Cogs] ),\n    QBS_SighCast_Sales[Currency] = \"EGP\"\n)"
+    },
+    {
+      "name": "COGS EUR",
+      "expression": "\nCALCULATE (\n    SUM ( QBS_SighCast_Sales[Cogs] ),\n    QBS_SighCast_Sales[Currency] = \"EUR\"\n)"
+    },
+    {
+      "name": "COGS USD",
+      "expression": "\nCALCULATE (\n    SUM ( QBS_SighCast_Sales[Cogs] ),\n    QBS_SighCast_Sales[Currency] = \"USD\"\n)"
+    },
+    {
+      "name": "Contribution %",
+      "expression": "\nDIVIDE (\n    [Gross Profit],\n    CALCULATE ( [Gross Profit], ALL ( QBS_SighCast_Sales[ItemID] ) ),\n    0\n)"
+    },
+    {
+      "name": "Cost Per Unit",
+      "expression": "[COGS] / [Actual QTY]"
+    },
+    {
+      "name": "Cumulative Sales",
+      "expression": "\nVAR CurrentRank = [Sales Rank]\nRETURN\nCALCULATE (\n    [Actual Val EGP],\n    FILTER (\n        ALL ( QBS_SighCast_Sales[ItemID] ),\n        [Sales Rank] <= CurrentRank\n    )\n)"
+    },
+    {
+      "name": "Cumulative Sales %",
+      "expression": "\nDIVIDE (\n    [Cumulative Sales],\n    CALCULATE ( [Actual Val EGP], ALL ( QBS_SighCast_Sales[ItemID] ) ),\n    0\n)"
+    },
+    {
+      "name": "Gross Margin",
+      "expression": "[Total Sales Value with ExchangeRate] - [COGS]"
+    },
+    {
+      "name": "Gross Margin %",
+      "expression": "\nDIVIDE(\n    [Gross Profit],\n    [Total Sales Value with ExchangeRate],\n    0\n)"
+    },
+    {
+      "name": "Gross Margin % EGP",
+      "expression": "\nDIVIDE(\n    [Gross Profit EGP],\n    [Actual Val EGP],\n    0\n)"
+    },
+    {
+      "name": "Gross Margin % EUR",
+      "expression": "\nDIVIDE(\n    [Gross Profit EUR],\n    [Actual Val EUR],\n    0\n)"
+    },
+    {
+      "name": "Gross Margin % USD",
+      "expression": "\nDIVIDE(\n    [Gross Profit USD],\n    [Actual Val USD],\n    0\n)"
+    },
+    {
+      "name": "Gross Margin Change (pp)",
+      "expression": "\n[Gross Margin %]\n- CALCULATE ( [Gross Margin %], DATEADD ( 'DateDim'[Date], -1, YEAR ) )"
+    },
+    {
+      "name": "Gross Profit",
+      "expression": "\n[Total Sales Value with ExchangeRate] - [COGS]"
+    },
+    {
+      "name": "Gross Profit EGP",
+      "expression": "\nCALCULATE (\n    SUM ( QBS_SighCast_Sales[LineTotal] ) - SUM ( QBS_SighCast_Sales[COGS] ),\n    QBS_SighCast_Sales[Currency] = \"EGP\"\n)"
+    },
+    {
+      "name": "Gross Profit EUR",
+      "expression": "\nCALCULATE (\n    SUM ( QBS_SighCast_Sales[LineTotal] ) - SUM ( QBS_SighCast_Sales[COGS] ),\n    QBS_SighCast_Sales[Currency] = \"EUR\"\n)"
+    },
+    {
+      "name": "Gross Profit Growth %",
+      "expression": "\nDIVIDE (\n    [Gross Profit] - CALCULATE ( [Gross Profit], DATEADD ( 'DateDim'[Date], -1, YEAR ) ),\n    CALCULATE ( [Gross Profit], DATEADD ( 'DateDim'[Date], -1, YEAR ) )\n)"
+    },
+    {
+      "name": "Gross Profit USD",
+      "expression": "\nCALCULATE (\n    SUM ( QBS_SighCast_Sales[LineTotal] ) - SUM (QBS_SighCast_Sales[COGS] ),\n    QBS_SighCast_Sales[Currency] = \"USD\"\n)"
+    },
+    {
+      "name": "Portfolio Class",
+      "expression": "\nSWITCH (\n    TRUE (),\n    [Cumulative Sales %] <= 0.8, \"A – Core Portfolio\",\n    [Cumulative Sales %] <= 0.95, \"B – Support\",\n    \"C – Tail / Review\"\n)"
+    },
+    {
+      "name": "Previous COGS",
+      "expression": "\nCALCULATE (\n    [COGS],\n    DATEADD ( DateDim[Date], -1, MONTH )\n)"
+    },
+    {
+      "name": "Sales Rank",
+      "expression": "\nRANKX (\n    ALL ( QBS_SighCast_Sales[Item_Number] ),\n    [Actual Val EGP],\n    ,\n    DESC,\n    DENSE\n)"
+    },
+    {
+      "name": "Average Inventory",
+      "expression": "\nAVERAGEX (\n    VALUES ( 'DateDim'[Date] ),\n    CALCULATE (\n        [Inventory Value] )\n    )"
+    },
+    {
+      "name": "Average Inventory Value",
+      "expression": "\nAVERAGEX (\n    VALUES ( 'DateDim'[Date] ),\n    [Inventory Value]\n)"
+    },
+    {
+      "name": "Average Unit Cost",
+      "expression": "\nDIVIDE (\n    [Inventory Value],\n    CALCULATE (\n        SUM ( SAP_VW_InventoryBalance[OnHandQtyPrimaryUOM] )\n    )\n)"
+    },
+    {
+      "name": "Daily Inventory Balance",
+      "expression": "\nVAR CurrentDate =\n    MAX(DateDim[Date])\nVAR LastTransDate =\n    CALCULATE(\n        MAX(SAP_VW_InventoryBalance[ProductionDate]),\n        ALL(SAP_VW_InventoryBalance)\n    )\nRETURN\nIF(\n    CurrentDate <= LastTransDate,\n    CALCULATE(\n        SUM(SAP_VW_InventoryBalance[OnHandQtyPrimaryUOM]),\n        FILTER(\n            ALL(DateDim),\n            DateDim[Date] <= CurrentDate\n        )\n    )\n)"
+    },
+    {
+      "name": "Days Inventory Outstanding DIO(Monthly)",
+      "expression": "\nDIVIDE (\n    [Average Inventory Value],\n    [COGS]\n) * 30"
+    },
+    {
+      "name": "Days Inventory Outstanding DIO(Quarterly)",
+      "expression": "\nDIVIDE (\n    [Average Inventory Value],\n    [COGS]\n) * 90"
+    },
+    {
+      "name": "Days Inventory Outstanding DIO(Yearly)",
+      "expression": "\nDIVIDE (\n    [Average Inventory Value],\n    [COGS]\n) * 365"
+    },
+    {
+      "name": "Days To Expire",
+      "expression": "\nDATEDIFF ( MAX(SAP_VW_InventoryBalance[ExpirationDate]), TODAY(), DAY )"
+    },
+    {
+      "name": "Gross Margin Return on Inventory (GMROI)",
+      "expression": "\nDIVIDE (\n    [Gross Margin],\n    [Average Inventory Value]\n)"
+    },
+    {
+      "name": "Inventory Age (Days)",
+      "expression": "\nDATEDIFF (\n    MAX ( SAP_VW_InventoryBalance[ProductionDate] ),\n    TODAY(),\n    DAY\n)"
+    },
+    {
+      "name": "Inventory Turnover Ratio",
+      "expression": "\nDIVIDE (\n    [COGS],\n    [Average Inventory Value]\n)"
+    },
+    {
+      "name": "Inventory Value",
+      "expression": "\nCALCULATE (\n    SUMX (\n        SAP_VW_InventoryBalance,\n        SAP_VW_InventoryBalance[CostValue]\n            * SAP_VW_InventoryBalance[OnHandQtyPrimaryUOM]\n    )\n)"
+    },
+    {
+      "name": "Last Production Date",
+      "expression": "\nMAX ( SAP_VW_InventoryBalance[ProductionDate] )"
+    },
+    {
+      "name": "Months To Expire",
+      "expression": "\nVAR SelectedDate =\n    MAX ( SAP_VW_InventoryBalance[ExpirationDate] )\nVAR TotalDays =\n    DATEDIFF ( SelectedDate, TODAY(), MONTH )\nRETURN\nTotalDays"
+    },
+    {
+      "name": "On Hand Qty",
+      "expression": "\nCALCULATE (\n    SUM ( SAP_VW_InventoryBalance[OnHandQtySecondaryUOM] )\n)"
+    },
+    {
+      "name": "PastDays From Production",
+      "expression": "\nVAR SelectedDate =\n    MAX ( SAP_VW_InventoryBalance[ProductionDate] )\nRETURN\nIF (\n    SelectedDate <= TODAY(),\n    DATEDIFF ( SelectedDate, TODAY(), DAY ),\n    BLANK()\n)"
+    },
+    {
+      "name": "PastMonths From Production",
+      "expression": "\nVAR SelectedDate =\n    MAX ( SAP_VW_InventoryBalance[ProductionDate] )\nVAR TotalDays =\n    DATEDIFF ( SelectedDate, TODAY(), DAY )\nRETURN\nIF (\n    SelectedDate <= TODAY(),\n    INT ( TotalDays / 30.44 ),\n    BLANK()\n)"
+    },
+    {
+      "name": "Sell Through Rate %",
+      "expression": "\nDIVIDE (\n    [Sales QTY Ton],\n    [On Hand Qty]\n)"
+    },
+    {
+      "name": "Shortage Qty",
+      "expression": "\nVAR OnHand = [On Hand Qty]\nVAR MinStock = MAX ( QBS_SighCast_Item[MinimumStock] )\nRETURN\nIF (\n    OnHand < MinStock,\n    MinStock - OnHand,\n    0\n)"
+    },
+    {
+      "name": "Slow Moving %",
+      "expression": "\nDIVIDE (\n    [Slow Moving Inventory],\n    [Inventory Value]\n)"
+    },
+    {
+      "name": "Slow Moving Inventory",
+      "expression": "\nCALCULATE (\n    [Inventory Value],\n    FILTER (\n        SAP_VW_InventoryBalance,\n        DATEDIFF (\n            SAP_VW_InventoryBalance[ProductionDate],\n            TODAY(),\n            DAY\n        ) > 180\n    )\n)"
+    },
+    {
+      "name": "Stock to Sales Ratio",
+      "expression": "\nDIVIDE (\n    [Average Inventory Value],\n    [Total Sales Value with ExchangeRate]\n) "
+    },
+    {
+      "name": "Avg Promotion per Transaction",
+      "expression": "\nDIVIDE (\n    [Total Promotion Value],\n    [Promo Transactions],\n    0\n)"
+    },
+    {
+      "name": "Avg Sales Non Promo Customers",
+      "expression": "\nDIVIDE (\n    [Non-Promo Sales],\n    [Eligible Customers] - [Participating Customers],\n    0\n)"
+    },
+    {
+      "name": "Avg Sales Promo Customers",
+      "expression": "\nDIVIDE (\n    [Promo Sales],\n    [Participating Customers],\n    0\n)"
+    },
+    {
+      "name": "Baseline Sales AVG",
+      "expression": "\nVAR AnchorDate =\n    COALESCE (\n        MAX ( DateDim[Date] ),\n        TODAY ()\n    )\n\nVAR Sales = CALCULATE (\n        [Total Sales Value with ExchangeRate],\n    QBS_SighCast_Sales[PromotionsTotal] = 0,\n    REMOVEFILTERS ( DateDim ),\n    DateDim[Date] > EDATE ( AnchorDate, -3 ),\n    DateDim[Date] <= AnchorDate\n\n    )\n\nRETURN\n    COALESCE ( Sales/3 , 0 )"
+    },
+    {
+      "name": "Customer Baseline Sales",
+      "expression": "\nCALCULATE (\n    [Customer Monthly Sales EGP],\n    DATEADD ( 'DateDim'[Date], -1, MONTH )\n)"
+    },
+    {
+      "name": "Customer Incremental Sales",
+      "expression": "\n[Promo Sales] - [Non-Promo Sales]"
+    },
+    {
+      "name": "Customer Incremental Sales AVG",
+      "expression": "\n[Total Sales Value with ExchangeRate] - [Baseline Sales AVG]"
+    },
+    {
+      "name": "Customer Monthly Sales EGP",
+      "expression": "\n[Total Sales Value with ExchangeRate]"
+    },
+    {
+      "name": "Customer Promo Flag",
+      "expression": "\nIF ( [Customer Promotion Value] < 0, 1, 0 )"
+    },
+    {
+      "name": "Customer Promotion ROI",
+      "expression": "\nDIVIDE (\n    [Customer Incremental Sales],\n    [Customer Promotion Value],\n    0\n)"
+    },
+    {
+      "name": "Customer Promotion Segment",
+      "expression": "\nSWITCH (\n    TRUE(),\n\n    [Customer Promotion Value] = 0, \n    \"No Promotion Given\",\n\n    [Customer Incremental Sales] <= 0,\n    \"Discount Addicted – لا يستحق\",\n\n    [Customer Promotion ROI] < 1,\n    \"Low ROI – راجع السياسة\",\n\n    [Customer Promotion ROI] >= 1\n        && [Customer Incremental Sales] > 0,\n    \"High Value – يستحق\",\n\n    \"Review\"\n)"
+    },
+    {
+      "name": "Customer Promotion Value",
+      "expression": "\nSUM(QBS_SighCast_Sales[PromotionsTotal])"
+    },
+    {
+      "name": "Eligible Customers",
+      "expression": "\nDISTINCTCOUNT ( QBS_SighCast_Sales[customerNo])"
+    },
+    {
+      "name": "Non-Promo Sales",
+      "expression": "\nCALCULATE (\n    [Total Sales Value with ExchangeRate],\n    QBS_SighCast_Sales[PromotionsTotal] = 0\n)"
+    },
+    {
+      "name": "Participating Customers",
+      "expression": "\nCALCULATE (\n    DISTINCTCOUNT ( QBS_SighCast_Sales[customerNo] ),\n    QBS_SighCast_Sales[PromotionsTotal] < 0\n)"
+    },
+    {
+      "name": "Participation Rate %",
+      "expression": "\nDIVIDE (\n    [Participating Customers],\n    [Eligible Customers],\n    0\n)"
+    },
+    {
+      "name": "Promo Sales",
+      "expression": "\nCALCULATE (\n    [Total Sales Value with ExchangeRate],\n    QBS_SighCast_Sales[PromotionsTotal] <> 0\n)"
+    },
+    {
+      "name": "Promo Transactions",
+      "expression": "\nCALCULATE (\n    COUNTROWS ( QBS_SighCast_Sales ),\n    QBS_SighCast_Sales[PromotionsTotal] > 0\n)"
+    },
+    {
+      "name": "Promotion Effectiveness Index",
+      "expression": "\nVAR Participation = [Participation Rate %]\nVAR PromoSales = [Promo Sales]\nVAR Discount = [Total Promotion Value]\nRETURN\nIF (\n    Discount > 0,\n    ( PromoSales / Discount ) * Participation,\n    0\n)"
+    },
+    {
+      "name": "Promotion Rate %",
+      "expression": "\nVAR Rate = DIVIDE([Total Promotion Value], [Total Sales Value with ExchangeRate], 0) * -1\nRETURN\n    IF(ISBLANK(Rate), 0, Rate)"
+    },
+    {
+      "name": "PromotionCustomersCoverage %",
+      "expression": "\nDIVIDE([Participating Customers], [Eligible Customers], 0)"
+    },
+    {
+      "name": "PromotionSegment",
+      "expression": "\nVAR PromoRate = [Promotion Rate %]  -- assuming decimal form, e.g., 0.05 for 5%\nRETURN\nSWITCH(\n    TRUE(),\n    PromoRate >= 0 && PromoRate <= 0.05, \"0% to 5%\",\n    PromoRate > 0.05 && PromoRate <= 0.10, \"6% to 10%\",\n    PromoRate > 0.10 && PromoRate <= 0.15, \"11% to 15%\",\n    PromoRate > 0.15, \"16% or Higher\",\n    \"No Segment\"\n)"
+    },
+    {
+      "name": "PromotionTotal",
+      "expression": "\nVAR Total = SUM(QBS_SighCast_Sales[PromotionsTotal])\nRETURN\n    IF(ISBLANK(Total), 0, Total)"
+    },
+    {
+      "name": "Total Customers",
+      "expression": "\nDISTINCTCOUNT ( QBS_SighCast_Customer[customerNo] )"
+    },
+    {
+      "name": "Total Promotion Value",
+      "expression": "\nVAR Total = SUM(QBS_SighCast_Sales[PromotionsTotal])\nRETURN\n    IF(ISBLANK(Total), 0, Total)"
+    },
+    {
+      "name": "Customer Avg 6 Months Sales",
+      "expression": "\nVAR Last6Months =\n    DATESINPERIOD (\n        'DateDim'[Date],\n        MAX ( 'DateDim'[Date] ),\n        -6,\n        MONTH\n    )\nVAR ActiveMonths =\n    COUNTROWS (\n        FILTER (\n            Last6Months,\n            CALCULATE ( [Customer Monthly Sales EGP] ) <> 0\n        )\n    )\nRETURN\nIF (\n    ActiveMonths = 0,\n    BLANK (),\n    DIVIDE (\n        CALCULATE ( [Customer Monthly Sales EGP], Last6Months ),\n        6\n    )\n)"
+    },
+    {
+      "name": "Customer Incremental Sales_1",
+      "expression": "\n[Customer Monthly Sales EGP]\n    - CALCULATE (\n        [Customer Monthly Sales EGP],\n        DATEADD ( 'DateDim'[Date], -6, MONTH )\n      )"
+    },
+    {
+      "name": "Customer Investable Flag",
+      "expression": "\nIF (\n    [Customer Promotion Value] > 0\n        && [Customer Incremental Sales] > 0\n        && [Customer Promotion ROI] >= 1.5\n        && [Customer Avg 6 Months Sales] > 0,\n    1,\n    0\n)"
+    },
+    {
+      "name": "Customer Promotion ROI_1",
+      "expression": "\nDIVIDE (\n    [Customer Incremental Sales],\n    [Customer Promotion Value],\n    0\n)"
+    },
+    {
+      "name": "% of Total 2",
+      "expression": "\nDIVIDE([Total Sales Value with ExchangeRate],[Total Sales Val])"
+    },
+    {
+      "name": "Color 2",
+      "expression": "\nIF([Product Rank 2] > [Pareto Cutoff Rank 2], \"#e7ecef\", \"#bbdefb\")"
+    },
+    {
+      "name": "Cumulative Revenue % 2",
+      "expression": "\nDIVIDE([Cumulative Revenue 2],[Total Sales Val])"
+    },
+    {
+      "name": "Cumulative Revenue % 3",
+      "expression": "\nDIVIDE([Cumulative Revenue 3],[Total Sales Val])"
+    },
+    {
+      "name": "Cumulative Revenue 2",
+      "expression": "\nIF(\n    ISINSCOPE(QBS_SighCast_Item[Category2]),\n    CALCULATE(\n        [Total Sales Value with ExchangeRate],\n        TOPN([Product Rank 2],\n        ALLSELECTED(QBS_SighCast_Item[Category2]),\n        [Total Sales Value with ExchangeRate])\n    ),\n    [Total Sales Val])"
+    },
+    {
+      "name": "Cumulative Revenue 3",
+      "expression": "\nIF(\n    ISINSCOPE(QBS_SighCast_Item[Category3]),\n    CALCULATE(\n        [Total Sales Value with ExchangeRate],\n        TOPN([Product Rank 3],\n        ALLSELECTED(QBS_SighCast_Item[Category2]),\n        [Total Sales Value with ExchangeRate])\n    ),\n    [Total Sales Val])"
+    },
+    {
+      "name": "Cutoff Cumulative Revenue 2",
+      "expression": "\nVar ClosestProduct = [Cutoff Product 2]\nRETURN\nIF(\n    SELECTEDVALUE(QBS_SighCast_Item[Category1]) = ClosestProduct,\n    [Cumulative Revenue 2],\n    blank()\n)"
+    },
+    {
+      "name": "Cutoff Cumulative Revenue 3",
+      "expression": "\nVar ClosestProduct = [Cutoff Product 3]\nRETURN\nIF(\n    SELECTEDVALUE(QBS_SighCast_Item[Category3]) = ClosestProduct,\n    [Cumulative Revenue 3],\n    blank()\n)"
+    },
+    {
+      "name": "Cutoff Product 2",
+      "expression": "\nVar TargetPercentage = [Pareto Value]\nVar ClosestProduct =\n    TOPN(\n        1,\n        ADDCOLUMNS(\n            SUMMARIZE(\n                ALLSELECTED('QBS_SighCast_Sales'),\n                QBS_SighCast_Item[Category2]\n            ),\n            \"CumulativeRevenuePercentage\",[Cumulative Revenue % 2],\n            \"Difference\",ABS([Cumulative Revenue % 2] - TargetPercentage)\n        ),\n        [Difference],ASC\n    )\n    RETURN\n    MAXX(\n        ClosestProduct,\n        QBS_SighCast_Item[Category2]\n    )"
+    },
+    {
+      "name": "Cutoff Product 3",
+      "expression": "\nVar TargetPercentage = [Pareto Value]\nVar ClosestProduct =\n    TOPN(\n        1,\n        ADDCOLUMNS(\n            SUMMARIZE(\n                ALLSELECTED('QBS_SighCast_Sales'),\n                QBS_SighCast_Item[Category3]\n            ),\n            \"CumulativeRevenuePercentage\",[Cumulative Revenue % 3],\n            \"Difference\",ABS([Cumulative Revenue % 3] - TargetPercentage)\n        ),\n        [Difference],ASC\n    )\n    RETURN\n    MAXX(\n        ClosestProduct,\n        QBS_SighCast_Item[Category3]\n    )"
+    },
+    {
+      "name": "Cutoff Product vs All Product 2",
+      "expression": "\n CALCULATE(\n    DIVIDE([Pareto Cutoff Rank 2],[Product Count])\n )"
+    },
+    {
+      "name": "Cutoff Rank 2",
+      "expression": "\nVAR closesProduct = [Cutoff Product 2]\nRETURN\nIF(\n    SELECTEDVALUE(QBS_SighCast_Item[Category2]) = closesProduct,\n    [Product Rank 2],\n    blank()\n)"
+    },
+    {
+      "name": "Cutoff Rank 3",
+      "expression": "\nVAR closesProduct = [Cutoff Product 3]\nRETURN\nIF(\n    SELECTEDVALUE(QBS_SighCast_Item[Category3]) = closesProduct,\n    [Product Rank 3],\n    blank()\n)"
+    },
+    {
+      "name": "Cutoff Revenue % 2",
+      "expression": "\nVAR ClosestProduct = [Cutoff Product 2]\nRETURN\nIF(\n    SELECTEDVALUE(QBS_SighCast_Item[Category2]) = ClosestProduct,\n    [Cumulative Revenue % 2],\n    BLANK()\n)"
+    },
+    {
+      "name": "Cutoff Revenue % 3",
+      "expression": "\nVAR ClosestProduct = [Cutoff Product 3]\nRETURN\nIF(\n    SELECTEDVALUE(QBS_SighCast_Item[Category3]) = ClosestProduct,\n    [Cumulative Revenue % 3],\n    BLANK()\n)"
+    },
+    {
+      "name": "Cutoff Revenue GT% 2",
+      "expression": "\nVAR ClosestProduct = [Cutoff Product 2]\nRETURN\nIF(SELECTEDVALUE(QBS_SighCast_Item[Category2])=ClosestProduct,\n[Total Sales Value with ExchangeRate],\nBLANK()\n)/4"
+    },
+    {
+      "name": "Cutoff Revenue GT% 3",
+      "expression": "\nVAR ClosestProduct = [Cutoff Product 3]\nRETURN\nIF(SELECTEDVALUE(QBS_SighCast_Item[Category3])=ClosestProduct,\n[Total Sales Value with ExchangeRate],\nBLANK()\n)/4"
+    },
+    {
+      "name": "Pareto Cutoff Rank 2",
+      "expression": "\nCALCULATE(\n    MAXX(VALUES(QBS_SighCast_Item[Category2]), [Cutoff Rank 2]),\n    ALLSELECTED(QBS_SighCast_Item)\n)"
+    },
+    {
+      "name": "Pareto Cutoff Rank 3",
+      "expression": "\nCALCULATE(\n    MAXX(VALUES(QBS_SighCast_Item[Category3]), [Cutoff Rank 3]),\n    ALLSELECTED(QBS_SighCast_Item)\n)"
+    },
+    {
+      "name": "Product Rank 2",
+      "expression": "\nif(\n    ISINSCOPE('QBS_SighCast_Item'[Category2]),\n    RANKX(\n        ALLSELECTED('QBS_SighCast_Item'[Category2]),\n        [Total Sales Value with ExchangeRate])\n)"
+    },
+    {
+      "name": "Product Rank 3",
+      "expression": "\nif(\n    ISINSCOPE(QBS_SighCast_Item[Category3]),\n    RANKX(\n        ALLSELECTED(QBS_SighCast_Item[Category3]),\n        [Total Sales Value with ExchangeRate])\n)"
+    },
+    {
+      "name": "Total Sales Val 2",
+      "expression": "\nCALCULATE([Total Sales Value with ExchangeRate],\nALLSELECTED('QBS_SighCast_Sales')\n)"
+    },
+    {
+      "name": "Purchase Frequency",
+      "expression": "\nCALCULATE(\n    DISTINCTCOUNT(QBS_SighCast_Sales[InvoiceAccount]),\n    QBS_SighCast_Sales[PaymentTermsID] = \"نقدا\"\n)"
+    },
+    {
+      "name": "Revenue Mix %",
+      "expression": "\nDIVIDE (\n    [Total Sales Value with ExchangeRate],\n    CALCULATE (\n        [Total Sales Value with ExchangeRate],\n        REMOVEFILTERS (\n            QBS_SighCast_Item[Category1],\n            QBS_SighCast_Item[ItemNameA]\n        )\n    )\n)"
+    },
+    {
+      "name": "RevenueQTY",
+      "expression": "SUM(QBS_SighCast_Sales[LargeQty])"
+    },
+    {
+      "name": "Total Sales Value with ExchangeRate",
+      "expression": "\nSUMX(\n    QBS_SighCast_Sales,\n    QBS_SighCast_Sales[LineTotal] * QBS_SighCast_Sales[ExchangeRate]\n)"
+    },
+    {
+      "name": "Financing Cost %",
+      "expression": "\nDIVIDE (\n    SUM ( 'Analysis Profitability'[Total Financing ] ),\n    SUM ( 'Analysis Profitability'[Net Sales After Discount] ),\n    0\n)"
+    },
+    {
+      "name": "Gross Profit %",
+      "expression": "\nDIVIDE ( SUM('Analysis Profitability'[Gross Profit]), [Net Sales_M] )"
+    },
+    {
+      "name": "Growth_(COGS)",
+      "expression": "\nSUMX (\n    VALUES ( 'Analysis Profitability'[Cut] ),\n    SWITCH (\n        TRUE(),\n\n        'Analysis Profitability'[Cut] = \"9*9\",\n            [Total COGS_M] * ( 1 + [Volume Growth % (9*9)] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"13*13\",\n            [Total COGS_M] * ( 1 + [Volume Growth % (13*13) Value] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"10*10\",\n            [Total COGS_M] * ( 1 + [Volume Growth % (10*10) Value] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"7*7\",\n            [Total COGS_M] * ( 1 + [Volume Growth % (7*7) Value] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"7.5*7.5\",\n            [Total COGS_M] * ( 1 + [Volume Growth % (7.5*7.5) Value] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"Crinkle\",\n            [Total COGS_M] * ( 1 + [Volume Growth % (Crinkle) Value] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"HB\",\n            [Total COGS_M] * ( 1 + [Volume Growth % (HB) Value] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"MIX\",\n            [Total COGS_M] * ( 1 + [Volume Growth % (MIX) Value] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"STH\",\n            [Total COGS_M] * ( 1 + [Volume Growth % (STH) Value] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"WEDGES\",\n            [Total COGS_M] * ( 1 + [Volume Growth % (WEDGES) Value] / 100 )\n    )\n)"
+    },
+    {
+      "name": "Growth_Gross Profit",
+      "expression": "[Growth_Net Sales After Discount] - [Growth_(COGS)] - [Growth_Industrial Cost] - [Growth_NSPO 8%]"
+    },
+    {
+      "name": "Growth_Industrial Cost",
+      "expression": "\nSUMX (\n    VALUES ( 'Analysis Profitability'[Cut] ),\n    SWITCH (\n        TRUE(),\n\n        'Analysis Profitability'[Cut] = \"9*9\",\n            [Total industrial Cost_M]\n                * ( 1 + [Volume Growth % (9*9)] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"13*13\",\n            [Total industrial Cost_M]\n                * ( 1 + [Volume Growth % (13*13) Value] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"10*10\",\n            [Total industrial Cost_M]\n                * ( 1 + [Volume Growth % (10*10) Value] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"7*7\",\n            [Total industrial Cost_M]\n                * ( 1 + [Volume Growth % (7*7) Value] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"7.5*7.5\",\n            [Total industrial Cost_M]\n                * ( 1 + [Volume Growth % (7.5*7.5) Value] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"Crinkle\",\n            [Total industrial Cost_M]\n                * ( 1 + [Volume Growth % (Crinkle) Value] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"HB\",\n            [Total industrial Cost_M]\n                * ( 1 + [Volume Growth % (HB) Value] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"MIX\",\n            [Total industrial Cost_M]\n                * ( 1 + [Volume Growth % (MIX) Value] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"STH\",\n            [Total industrial Cost_M]\n                * ( 1 + [Volume Growth % (STH) Value] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"WEDGES\",\n            [Total industrial Cost_M]\n                * ( 1 + [Volume Growth % (WEDGES) Value] / 100 )\n    )\n)"
+    },
+    {
+      "name": "Growth_Net Profit Audit",
+      "expression": "[Growth_Gross Profit] - [Growth_Supply Chain] - SUM('Analysis Profitability'[Total Site OH]) - SUM( 'Analysis Profitability'[Total Sales & MKT]) - SUM('Analysis Profitability'[Total G&A]) - SUM('Analysis Profitability'[Total Financing ]) + SUM('Analysis Profitability'[Total Other Revenue])"
+    },
+    {
+      "name": "Growth_Net Profit Audit %",
+      "expression": "\nDIVIDE([Growth_Net Profit Audit] ,[Growth_Net Sales After Discount],0)"
+    },
+    {
+      "name": "Growth_Net Sales After Discount",
+      "expression": "\nSUMX (\n    VALUES ( 'Analysis Profitability'[Cut] ),\n    SWITCH (\n        TRUE(),\n\n        'Analysis Profitability'[Cut] = \"9*9\",\n            [Net Sales_M] * ( 1 + [Volume Growth % (9*9)] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"13*13\",\n            [Net Sales_M] * ( 1 + [Volume Growth % (13*13) Value] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"10*10\",\n            [Net Sales_M] * ( 1 + [Volume Growth % (10*10) Value] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"7*7\",\n            [Net Sales_M] * ( 1 + [Volume Growth % (7*7) Value] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"7.5*7.5\",\n            [Net Sales_M] * ( 1 + [Volume Growth % (7.5*7.5) Value] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"Crinkle\",\n            [Net Sales_M] * ( 1 + [Volume Growth % (Crinkle) Value] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"HB\",\n            [Net Sales_M] * ( 1 + [Volume Growth % (HB) Value] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"MIX\",\n            [Net Sales_M] * ( 1 + [Volume Growth % (MIX) Value] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"STH\",\n            [Net Sales_M] * ( 1 + [Volume Growth % (STH) Value] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"WEDGES\",\n            [Net Sales_M] * ( 1 + [Volume Growth % (WEDGES) Value] / 100 )\n    )\n)"
+    },
+    {
+      "name": "Growth_NSPO 8%",
+      "expression": "\nSUMX (\n    VALUES ( 'Analysis Profitability'[Cut] ),\n    SWITCH (\n        TRUE(),\n\n        'Analysis Profitability'[Cut] = \"9*9\",\n            [NSPO 8 %_M] * ( 1 + [Volume Growth % (9*9)] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"13*13\",\n            [NSPO 8 %_M] * ( 1 + [Volume Growth % (13*13) Value] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"10*10\",\n            [NSPO 8 %_M] * ( 1 + [Volume Growth % (10*10) Value] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"7*7\",\n            [NSPO 8 %_M] * ( 1 + [Volume Growth % (7*7) Value] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"7.5*7.5\",\n            [NSPO 8 %_M] * ( 1 + [Volume Growth % (7.5*7.5) Value] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"Crinkle\",\n            [NSPO 8 %_M] * ( 1 + [Volume Growth % (Crinkle) Value] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"HB\",\n            [NSPO 8 %_M] * ( 1 + [Volume Growth % (HB) Value] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"MIX\",\n            [NSPO 8 %_M] * ( 1 + [Volume Growth % (MIX) Value] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"STH\",\n            [NSPO 8 %_M] * ( 1 + [Volume Growth % (STH) Value] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"WEDGES\",\n            [NSPO 8 %_M] * ( 1 + [Volume Growth % (WEDGES) Value] / 100 )\n    )\n)"
+    },
+    {
+      "name": "Growth_Q/Ton",
+      "expression": "\nSUMX (\n    VALUES ( 'Analysis Profitability'[Cut] ),\n    SWITCH (\n        TRUE(),\n\n        'Analysis Profitability'[Cut] = \"9*9\",\n            [Total Q/Ton_M] * ( 1 + [Volume Growth % (9*9)] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"13*13\",\n            [Total Q/Ton_M] * ( 1 + [Volume Growth % (13*13) Value] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"10*10\",\n            [Total Q/Ton_M] * ( 1 + [Volume Growth % (10*10) Value] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"7*7\",\n            [Total Q/Ton_M] * ( 1 + [Volume Growth % (7*7) Value] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"7.5*7.5\",\n            [Total Q/Ton_M] * ( 1 + [Volume Growth % (7.5*7.5) Value] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"Crinkle\",\n            [Total Q/Ton_M] * ( 1 + [Volume Growth % (Crinkle) Value] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"HB\",\n            [Total Q/Ton_M] * ( 1 + [Volume Growth % (HB) Value] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"MIX\",\n            [Total Q/Ton_M] * ( 1 + [Volume Growth % (MIX) Value] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"STH\",\n            [Total Q/Ton_M] * ( 1 + [Volume Growth % (STH) Value] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"WEDGES\",\n            [Total Q/Ton_M] * ( 1 + [Volume Growth % (WEDGES) Value] / 100 )\n    )\n)"
+    },
+    {
+      "name": "Growth_Supply Chain",
+      "expression": "\nSUMX (\n    VALUES ( 'Analysis Profitability'[Cut] ),\n    SWITCH (\n        TRUE(),\n\n        'Analysis Profitability'[Cut] = \"9*9\",\n            [Supply Chain_M] * ( 1 + [Volume Growth % (9*9)] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"13*13\",\n            [Supply Chain_M] * ( 1 + [Volume Growth % (13*13) Value] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"10*10\",\n            [Supply Chain_M] * ( 1 + [Volume Growth % (10*10) Value] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"7*7\",\n            [Supply Chain_M] * ( 1 + [Volume Growth % (7*7) Value] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"7.5*7.5\",\n            [Supply Chain_M] * ( 1 + [Volume Growth % (7.5*7.5) Value] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"Crinkle\",\n            [Supply Chain_M] * ( 1 + [Volume Growth % (Crinkle) Value] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"HB\",\n            [Supply Chain_M] * ( 1 + [Volume Growth % (HB) Value] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"MIX\",\n            [Supply Chain_M] * ( 1 + [Volume Growth % (MIX) Value] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"STH\",\n            [Supply Chain_M] * ( 1 + [Volume Growth % (STH) Value] / 100 ),\n\n        'Analysis Profitability'[Cut] = \"WEDGES\",\n            [Supply Chain_M] * ( 1 + [Volume Growth % (WEDGES) Value] / 100 )\n    )\n)"
+    },
+    {
+      "name": "Incom tax_M",
+      "expression": "SUM('Analysis Profitability'[Incom tax ])"
+    },
+    {
+      "name": "Income Tax Cost %",
+      "expression": "\nDIVIDE (\n    SUM ( 'Analysis Profitability'[Incom tax ] ),\n    CALCULATE (\n        SUM ( 'Analysis Profitability'[Net Sales After Discount] ),\n        ALLSELECTED ( 'Analysis Profitability' )\n    ),\n    0\n)"
+    },
+    {
+      "name": "Indirect Cost",
+      "expression": "\n  (SUM ( 'Analysis Profitability'[Total industrial Cost] ) + SUM('Analysis Profitability'[NSPO 8%]))"
+    },
+    {
+      "name": "Indirect Cost %",
+      "expression": "\nDIVIDE (\n    (SUM ( 'Analysis Profitability'[Total industrial Cost] ) + SUM('Analysis Profitability'[NSPO 8%])),\n    SUM ( 'Analysis Profitability'[Net Sales After Discount] ),\n    0\n)"
+    },
+    {
+      "name": "Industrial Cost %",
+      "expression": "\nDIVIDE (\n    (SUM ( 'Analysis Profitability'[Total industrial Cost] )),\n    SUM ( 'Analysis Profitability'[Net Sales After Discount] ),\n    0\n)"
+    },
+    {
+      "name": "Net Profit After tax_M",
+      "expression": "SUM('Analysis Profitability'[Net Profit After tax ])"
+    },
+    {
+      "name": "Net Profit Audit %",
+      "expression": "\nDIVIDE (\n    SUM ( 'Analysis Profitability'[Net Profit Audit] ),\n        SUM ( 'Analysis Profitability'[Net Sales After Discount] )\n  ,  0\n) "
+    },
+    {
+      "name": "Net Profit Audit_M",
+      "expression": "SUM('Analysis Profitability'[Net Profit Audit])"
+    },
+    {
+      "name": "Net Sales_M",
+      "expression": "\nSUM ( 'Analysis Profitability'[Net Sales After Discount] )"
+    },
+    {
+      "name": "NP Before Other %",
+      "expression": "\nVAR NetSales =\n    SUM ( 'Analysis Profitability'[Net Sales After Discount] )\n\nVAR TotalCosts =\n    SUM ( 'Analysis Profitability'[Total Material (COGS)] )\n        + SUM ( 'Analysis Profitability'[Total industrial Cost] )\n        + SUM ( 'Analysis Profitability'[NSPO 8%] )\n        + SUM ( 'Analysis Profitability'[Total supply chain cost] )\n        + SUM ( 'Analysis Profitability'[Total Site OH] )\n        + SUM ( 'Analysis Profitability'[Total Sales & MKT] )\n        + SUM ( 'Analysis Profitability'[Total G&A] )\n        + SUM ( 'Analysis Profitability'[Total Financing ] )\n\nRETURN\nIF (\n    NetSales > 0\n        && TotalCosts <> 0,\n    1 - DIVIDE ( TotalCosts, NetSales ),\n    BLANK ()\n)"
+    },
+    {
+      "name": "NSPO 8 %",
+      "expression": "\nDIVIDE (\n    SUM ( 'Analysis Profitability'[NSPO 8%] ),\n    SUM ( 'Analysis Profitability'[Net Sales After Discount] ),\n    0\n)"
+    },
+    {
+      "name": "NSPO 8 %_M",
+      "expression": "SUM('Analysis Profitability'[NSPO 8%])"
+    },
+    {
+      "name": "Sales & MKT %",
+      "expression": "\nDIVIDE (\n    SUM ( 'Analysis Profitability'[Total Sales & MKT] ),\n    SUM ( 'Analysis Profitability'[Net Sales After Discount] ),\n    0\n)"
+    },
+    {
+      "name": "Supply Chain  %",
+      "expression": "\nDIVIDE (\n    (SUM ( 'Analysis Profitability'[Total supply chain cost] ) ),\n  \n        SUM ( 'Analysis Profitability'[Net Sales After Discount] ),\n  \n    0\n)"
+    },
+    {
+      "name": "Supply Chain_M",
+      "expression": "SUM('Analysis Profitability'[Total supply chain cost])"
+    },
+    {
+      "name": "Total COGS_M",
+      "expression": "\nSUM ( 'Analysis Profitability'[Total Material (COGS)] )"
+    },
+    {
+      "name": "Total G&A Cost %",
+      "expression": "\nDIVIDE (\n    SUM ( 'Analysis Profitability'[Total G&A] ),\n    SUM ( 'Analysis Profitability'[Net Sales After Discount] )\n)"
+    },
+    {
+      "name": "Total industrial Cost_M",
+      "expression": "SUM('Analysis Profitability'[Total industrial Cost])"
+    },
+    {
+      "name": "Total Material (COGS) %",
+      "expression": "\nDIVIDE (\n    SUM ( 'Analysis Profitability'[Total Material (COGS)] ),\n    SUM ( 'Analysis Profitability'[Net Sales After Discount] ),\n    0\n)"
+    },
+    {
+      "name": "Total Other Revenue Cost %",
+      "expression": "\nDIVIDE (\n    SUM ( 'Analysis Profitability'[Total Other Revenue] ),\n    SUM ( 'Analysis Profitability'[Net Sales After Discount] ),\n    0\n)"
+    },
+    {
+      "name": "Total Q/Ton_M",
+      "expression": "\nSUM ( 'Analysis Profitability'[Q/Ton] )"
+    },
+    {
+      "name": "Total Site OH %",
+      "expression": "\nDIVIDE (\n    SUM ( 'Analysis Profitability'[Total Site OH] ),\n    SUM ( 'Analysis Profitability'[Net Sales After Discount] ),\n    0\n)"
+    },
+    {
+      "name": "AROverDue%",
+      "expression": "CALCULATE(SUM(QBS_SighCast_CustomerOutStanding[AMOUNT_DUE]),DateDim[DayOffset] < 0)  / CALCULATE(SUM(QBS_SighCast_CustomerOutStanding\n[AMOUNT_DUE]),ISNUMBER(DateDim[DayOffset]))"
+    },
+    {
+      "name": "Customer Balance Closing",
+      "expression": "\nVAR CurrentCustomer =\n    SELECTEDVALUE ( QBS_SighCast_Customer[CustomerNo] )\nVAR CurrentCurr =\n    SELECTEDVALUE ( QBS_SighCast_CustomerOutStanding[INVOICE_CURRENCY_CODE] )\nVAR PeriodLastDate =\n    MAX ( DateDim1[Date] )\nRETURN\n        CALCULATE (\n            SUM ( QBS_SighCast_CustomerOutStanding[INVOICE_AMOUNT] ),\n            FILTER (\n                ALL ( QBS_SighCast_CustomerOutStanding ),\n                QBS_SighCast_CustomerOutStanding[CUSTOMER_ID] = CurrentCustomer\n                    && QBS_SighCast_CustomerOutStanding[INVOICE_DATE] <= PeriodLastDate\n                    && ( ISBLANK ( CurrentCurr )\n                         || QBS_SighCast_CustomerOutStanding\n[INVOICE_CURRENCY_CODE] = CurrentCurr )\n            )\n        )"
+    },
+    {
+      "name": "OverDueEGP%",
+      "expression": "CALCULATE(SUM(QBS_SighCast_CustomerOutStanding[AMOUNT_DUE]),QBS_SighCast_CustomerOutStanding[INVOICE_CURRENCY_CODE] = \"EGP\",DateDim[DayOffset] < 0)  / CALCULATE(SUM(QBS_SighCast_CustomerOutStanding[AMOUNT_DUE]),QBS_SighCast_CustomerOutStanding[INVOICE_CURRENCY_CODE] = \"EGP\",ISNUMBER(DateDim[DayOffset]))  "
+    },
+    {
+      "name": "OverDueUSD%",
+      "expression": "CALCULATE(SUM(QBS_SighCast_CustomerOutStanding[AMOUNT_DUE]),QBS_SighCast_CustomerOutStanding[INVOICE_CURRENCY_CODE] = \"USD\",DateDim[DayOffset] < 0)  / CALCULATE(SUM(QBS_SighCast_CustomerOutStanding[AMOUNT_DUE]),QBS_SighCast_CustomerOutStanding[INVOICE_CURRENCY_CODE] = \"USD\",ISNUMBER(DateDim[DayOffset]))  "
+    },
+    {
+      "name": "Inventory_Tosales",
+      "expression": "IFERROR(  [Average Inventory]/ (SUM(Dashboard_Orders[SQTY])/1000),0)"
+    },
+    {
+      "name": "Inventory Turnover",
+      "expression": "[Revenue/Ton] / [Average Inventory]"
+    },
+    {
+      "name": "Pareto Value",
+      "expression": "SELECTEDVALUE('Parameter'[Parameter], 0.8)"
+    }
+  ]
+}
