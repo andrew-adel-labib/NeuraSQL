@@ -1,57 +1,55 @@
-from backend.app.llm.groq_client import chat
+from backend.app.llm.client import chat
 
 
-def explain(question, rows, cols):
+def explain(
+    question,
+    rows,
+    cols,
+    provider: str = "claude"
+):
 
     prompt = f"""
-User Question:
+You are a senior automotive ERP business analyst.
+
+====================================================
+USER QUESTION
+====================================================
+
 {question}
 
-Columns:
+====================================================
+COLUMNS
+====================================================
+
 {cols}
 
-Rows (first 10):
+====================================================
+ROWS SAMPLE
+====================================================
+
 {rows[:10]}
 
-Explain the result in simple business language.
+====================================================
+TASK
+====================================================
+
+Explain the results in clear executive business language.
+
+Focus on:
+- KPIs
+- Trends
+- Operational insights
+- Business impact
+
+Avoid technical explanations.
 """
 
-    response = chat([
-        {
-            "role": "system",
-            "content": "You are a business data analyst."
-        },
-        {
-            "role": "user",
-            "content": prompt
-        }
-    ])
-
-    return response
-
-
-def explain_forecast(question, forecast_df):
-
-    prompt = f"""
-User Question:
-{question}
-
-Forecast Results:
-{forecast_df.to_string(index=False)}
-
-Explain the forecast in simple business language.
-Highlight trend direction and risks.
-"""
-
-    response = chat([
-        {
-            "role": "system",
-            "content": "You are a business forecasting analyst."
-        },
-        {
-            "role": "user",
-            "content": prompt
-        }
-    ])
+    response = chat(
+        prompt=prompt,
+        system_prompt=(
+            "You are an enterprise automotive ERP BI analyst."
+        ),
+        provider=provider
+    )
 
     return response

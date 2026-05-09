@@ -18,14 +18,29 @@ from mcp_server.tools.business_dimension_mapper import (
 
 
 DIMENSION_SELECTOR_PROMPT = """
-You are an enterprise BI semantic planner.
+You are an enterprise automotive ERP semantic planner.
 
 Your task:
 Analyze the business question using ONLY:
 
 1. Retrieved business dimensions from production database
 2. Semantic schema context
-3. Ranked measures
+3. Automotive ERP business logic
+
+====================================================
+AUTOMOTIVE BUSINESS DOMAINS
+====================================================
+
+- Workshop revenue
+- Workshop invoices
+- Parts inventory
+- Parts sales
+- Vehicle inventory
+- Vehicle sales
+- Vehicle profitability
+- Mechanics performance
+- Branch operations
+- Franchise operations
 
 ====================================================
 STRICT RULES
@@ -33,31 +48,22 @@ STRICT RULES
 
 - ONLY use provided dimensions
 - ONLY use provided schema
-- ONLY use provided measures
 - NEVER invent:
     - dimensions
     - branches
-    - categories
-    - products
-    - geography
-    - salesmen
+    - companies
+    - franchises
+    - mechanics
+    - vehicles
     - filters
-- If user mentions:
-    - branch
-    - city
-    - region
-    - customer channel
-    - product hierarchy
-    - salesman
-  then map ONLY to actual retrieved DB values
 - Detect:
-    - measure
+    - measures
     - dimensions
     - filters
     - grain
     - ranking
     - aggregation
-    - time series
+    - trend analysis
 - Return ONLY JSON
 
 ====================================================
@@ -81,6 +87,7 @@ OUTPUT FORMAT
 
 
 def clean_json(text: str):
+
     text = text.strip()
 
     text = re.sub(
@@ -106,41 +113,47 @@ def clean_json(text: str):
     text = text.strip()
 
     try:
+
         return json.loads(text)
 
     except Exception:
+
         return None
 
 
 def build_business_dimension_context():
-    """
-    Builds production business dimension metadata
-    with clear dimension-to-values mapping
-    """
 
     dimensions = extract_business_dimensions()
 
     lines = []
 
     DIMENSION_LABELS = {
+
         "branches": "Branch",
-        "salesmen": "Salesman",
-        "regions": "Region",
-        "districts": "District",
-        "cities": "City",
-        "areas": "Area",
 
-        "customer_category": "Customer Channel",
-        "customer_category2": "Customer Sub-Channel",
-        "customer_category3": "Customer Level 3",
-        "customer_category4": "Customer Level 4",
+        "companies": "Company",
 
-        "item_category1": "Master Brand",
-        "item_category2": "Sub Brand",
-        "item_category3": "Item Level 3",
-        "item_category4": "Item Level 4",
+        "entities": "Entity",
 
-        "company_codes": "Company"
+        "departments": "Department",
+
+        "franchises": "Franchise",
+
+        "sale_types": "Sale Type",
+
+        "vehicle_models": "Vehicle Model",
+
+        "mechanics": "Mechanic",
+
+        "parts": "Part",
+
+        "vehicle_numbers": "Vehicle",
+
+        "vehicle_types": "Vehicle Type",
+
+        "vehicle_locations": "Vehicle Location",
+
+        "parts_categories": "Parts Category"
     }
 
     for key, values in dimensions.items():
@@ -155,6 +168,7 @@ def build_business_dimension_context():
         lines.append(
             f"""
 Dimension: {label}
+
 Possible Values:
 {", ".join(map(str, sample_values))}
 """
@@ -167,11 +181,15 @@ def fallback_dimension_plan(
     question: str,
     business_dimensions: dict
 ):
+
     q = question.lower()
 
     dimensions = []
+
     filters = {}
+
     grain = None
+
     aggregation = "sum"
 
     ranking = {
@@ -180,72 +198,62 @@ def fallback_dimension_plan(
         "limit": None
     }
 
-    measure = "SalesBeforeTax"
+    measure = "Workshop Revenue"
 
-    if any(
-        x in q
-        for x in [
-            "volume",
-            "qty",
-            "quantity",
-            "ton"
-        ]
-    ):
-        measure = "Sales QTY Ton"
+    if "vehicle" in q:
+
+        measure = "Vehicle Sales Revenue"
+
+    elif "inventory" in q:
+
+        measure = "Inventory Value"
+
+    elif "parts" in q:
+
+        measure = "Parts Revenue"
+
+    elif "profit" in q:
+
+        measure = "Vehicle Profit"
 
     if "branch" in q:
         dimensions.append("Branch")
 
-    if any(
-        x in q
-        for x in [
-            "region",
-            "district",
-            "city",
-            "area"
-        ]
-    ):
-        dimensions.append("Geographic")
+    if "company" in q:
+        dimensions.append("Company")
 
-    if any(
-        x in q
-        for x in [
-            "channel",
-            "customer"
-        ]
-    ):
-        dimensions.append("Customer Channel")
+    if "franchise" in q:
+        dimensions.append("Franchise")
 
-    if any(
-        x in q
-        for x in [
-            "product",
-            "brand",
-            "item"
-        ]
-    ):
-        dimensions.append("Item Hierarchy")
+    if "mechanic" in q:
+        dimensions.append("Mechanic")
 
     for branch in business_dimensions.get(
         "branches",
         []
     ):
+
         if branch.lower() in q:
+
             filters["Branch"] = branch
             break
 
-    for city in business_dimensions.get(
-        "cities",
+    for company in business_dimensions.get(
+        "companies",
         []
     ):
-        if str(city).lower() in q:
-            filters["City"] = city
+
+        if company.lower() in q:
+
+            filters["Company"] = company
             break
 
     if "last year" in q:
+
         filters["Year"] = "last_year"
 
     elif "this year" in q:
+
         filters["Year"] = "current_year"
 
     if any(
@@ -255,15 +263,19 @@ def fallback_dimension_plan(
             "trend"
         ]
     ):
+
         grain = "month"
 
     elif "quarter" in q:
+
         grain = "quarter"
 
     elif "year" in q:
+
         grain = "year"
 
     if "top" in q:
+
         ranking = {
             "enabled": True,
             "type": "top",
@@ -271,6 +283,7 @@ def fallback_dimension_plan(
         }
 
     elif "bottom" in q:
+
         ranking = {
             "enabled": True,
             "type": "bottom",
@@ -298,11 +311,7 @@ def select_dimensions(
     model_provider: str = "claude"
 ):
     """
-    Enterprise production semantic dimension selector
-    Supports:
-    - Claude
-    - OpenAI
-    - Groq
+    Enterprise automotive ERP semantic planner
     """
 
     cache_key = (
@@ -314,9 +323,13 @@ def select_dimensions(
     )
 
     if cached:
-        cached["filters"] = correct_user_dimension_filters(
-            cached.get("filters", {})
+
+        cached["filters"] = (
+            correct_user_dimension_filters(
+                cached.get("filters", {})
+            )
         )
+
         return cached
 
     business_dimensions = (
@@ -360,8 +373,11 @@ USER QUESTION
     )
 
     if parsed:
-        parsed["filters"] = correct_user_dimension_filters(
-            parsed.get("filters", {})
+
+        parsed["filters"] = (
+            correct_user_dimension_filters(
+                parsed.get("filters", {})
+            )
         )
 
         parsed["model_provider"] = (

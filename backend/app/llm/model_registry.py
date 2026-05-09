@@ -14,7 +14,7 @@ AVAILABLE_MODELS = {
     "groq": {
         "provider": "groq",
         "label": "Groq",
-        "default_model": "llama-3.3-70b-versatile"
+        "default_model": "llama-3.1-8b-instant"
     }
 }
 

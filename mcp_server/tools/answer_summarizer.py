@@ -13,23 +13,9 @@ def summarize_answer(
     rows: list,
     model_provider: str = "claude"
 ):
-    """
-    Enterprise executive BI summarizer
-
-    Supports:
-    - Claude
-    - OpenAI
-    - Groq
-
-    Features:
-    - Cache support
-    - Executive summary generation
-    - KPI extraction
-    - Trend analysis
-    - Business recommendations
-    """
 
     if not rows:
+
         return (
             "No data was returned for this query."
         )
@@ -43,6 +29,7 @@ def summarize_answer(
     )
 
     if cached:
+
         return cached[
             "summary"
         ]
@@ -52,16 +39,13 @@ def summarize_answer(
     )
 
     preview = df.head(
-        20
+        10
     ).to_dict(
         orient="records"
     )
 
     prompt = f"""
-You are a senior enterprise BI analyst.
-
-Your role:
-Provide concise, executive-level business insights from analytical query results.
+You are an enterprise AI analytics assistant.
 
 ====================================================
 USER QUESTION
@@ -70,7 +54,7 @@ USER QUESTION
 {question}
 
 ====================================================
-RETRIEVED DATA SAMPLE
+QUERY RESULTS
 ====================================================
 
 {preview}
@@ -79,39 +63,29 @@ RETRIEVED DATA SAMPLE
 TASK
 ====================================================
 
-Provide:
+Provide ONLY:
 
-1. Direct answer to the business question
-2. Key KPIs
-3. Important business trends
-4. Major anomalies or insights
-5. Executive summary
-6. Strategic business recommendations if relevant
-
-====================================================
-RULES
-====================================================
-
-- Be concise
-- Be professional
-- Be business-oriented
-- Focus on decision-making
-- Avoid technical explanations
-- Avoid SQL/DAX language
-- Use natural executive communication
-- Prioritize actionable insights
-- Return ONLY summary text
+1. Direct concise answer
+2. Maximum 2 short sentences
+3. Use simple business language
+4. No headings
+5. No bullet points
+6. No recommendations
+7. No KPIs
+8. No strategic analysis
+9. No executive summary
+10. No SQL explanation
 
 ====================================================
-OUTPUT
+IMPORTANT
 ====================================================
 
-Return ONLY business summary.
+Return ONLY the final answer text.
 """
 
     response = chat(
-        prompt=question,
-        system_prompt=prompt,
+        prompt=prompt,
+        system_prompt=None,
         provider=model_provider
     )
 

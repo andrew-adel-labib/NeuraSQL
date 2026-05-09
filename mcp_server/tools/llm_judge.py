@@ -10,6 +10,7 @@ from mcp_server.tools.schema_cache import (
 
 
 def clean_json(text: str):
+
     text = re.sub(
         r"```json",
         "",
@@ -33,9 +34,11 @@ def clean_json(text: str):
     text = text.strip()
 
     try:
+
         return json.loads(text)
 
     except:
+
         return None
 
 
@@ -43,29 +46,11 @@ def judge_pipeline(
     user_query: str,
     rewritten_query: str,
     semantic_plan: dict,
-    dax: str,
+    sql: str,
     retrieved_rows: list,
     summary: str,
     model_provider: str = "claude"
 ):
-    """
-    Enterprise BI QA judge
-
-    Supports:
-    - Claude
-    - OpenAI
-    - Groq
-
-    Evaluates:
-    - Query understanding
-    - Semantic planning
-    - DAX correctness
-    - Data relevance
-    - Summary quality
-    - Final business answer
-
-    Uses cache to avoid repeated QA calls.
-    """
 
     cache_key = (
         f"judge::{model_provider}::{user_query}"
@@ -79,38 +64,44 @@ def judge_pipeline(
         return cached
 
     prompt = f"""
-You are an enterprise BI quality assurance judge.
+You are an enterprise SQL analytics QA judge.
 
-Evaluate the full pipeline quality.
+Evaluate the quality of the analytics pipeline.
 
 ====================================================
 USER QUERY
 ====================================================
+
 {user_query}
 
 ====================================================
 REWRITTEN QUERY
 ====================================================
+
 {rewritten_query}
 
 ====================================================
 SEMANTIC PLAN
 ====================================================
+
 {json.dumps(semantic_plan, indent=2)}
 
 ====================================================
-GENERATED DAX
+GENERATED SQL
 ====================================================
-{dax}
+
+{sql}
 
 ====================================================
 RETRIEVED DATA SAMPLE
 ====================================================
+
 {retrieved_rows[:10]}
 
 ====================================================
 FINAL SUMMARY
 ====================================================
+
 {summary}
 
 ====================================================
@@ -121,44 +112,25 @@ Evaluate:
 
 1. Query understanding
 2. Semantic planning quality
-3. DAX correctness
+3. SQL correctness
 4. Data relevance
-5. Summary correctness
-6. Business answer quality
-
-====================================================
-SCORING RULES
-====================================================
-
-- Score between 0.0 and 1.0
-- Be strict
-- Penalize:
-    - hallucination
-    - invalid DAX
-    - poor semantic planning
-    - weak data quality
-    - poor summary quality
-    - poor business usefulness
-- Reward:
-    - precise business answers
-    - schema correctness
-    - strong analytical alignment
-    - strategic executive summaries
+5. Summary quality
+6. Business usefulness
 
 ====================================================
 RETURN FORMAT
 ====================================================
 
-{{
+{
     "overall_score": 0.0,
     "query_understanding": 0.0,
     "semantic_quality": 0.0,
-    "dax_quality": 0.0,
+    "sql_quality": 0.0,
     "data_quality": 0.0,
     "summary_quality": 0.0,
     "final_verdict": "",
     "recommendations": []
-}}
+}
 
 ====================================================
 IMPORTANT
@@ -178,18 +150,17 @@ Return ONLY JSON.
     )
 
     if not parsed:
+
         parsed = {
             "overall_score": 0.5,
             "query_understanding": 0.5,
             "semantic_quality": 0.5,
-            "dax_quality": 0.5,
+            "sql_quality": 0.5,
             "data_quality": 0.5,
             "summary_quality": 0.5,
-            "final_verdict": (
-                "Fallback evaluation"
-            ),
+            "final_verdict": "Fallback evaluation",
             "recommendations": [
-                "LLM judge failed; fallback score used."
+                "LLM judge fallback used."
             ]
         }
 

@@ -6,37 +6,21 @@ def evaluate_pipeline(
     user_query: str,
     rewritten: str,
     semantic_plan: Dict,
-    dax: str,
+    sql: str,
     validation: Optional[Dict] = None,
     retrieved_rows: Optional[list] = None,
     tables: Optional[list] = None,
     dimensions: Optional[list] = None,
     measures: Optional[list] = None,
-    relationships: Optional[list] = None,
+    joins: Optional[list] = None,
     provider: str = "claude"
 ):
     """
-    Full enterprise evaluation layer
-
-    Supports:
-    - Claude
-    - OpenAI
-    - Groq
-
-    Evaluates:
-    - Query rewriting quality
-    - Table relevance
-    - Dimension relevance
-    - Measure relevance
-    - Relationship relevance
-    - DAX structural validity
-    - Validation quality
-    - Hallucination risk
-    - DAX complexity
-    - Confidence scoring
+    Enterprise SQL pipeline evaluation layer
     """
 
     validation = validation or {}
+
     retrieved_rows = retrieved_rows or []
 
     tables = tables or semantic_plan.get(
@@ -54,8 +38,8 @@ def evaluate_pipeline(
         []
     )
 
-    relationships = relationships or semantic_plan.get(
-        "relationships",
+    joins = joins or semantic_plan.get(
+        "joins",
         []
     )
 
@@ -66,8 +50,8 @@ def evaluate_pipeline(
         "table_score": 0.0,
         "dimension_score": 0.0,
         "measure_score": 0.0,
-        "relationship_score": 0.0,
-        "dax_structure_score": 0.0,
+        "join_score": 0.0,
+        "sql_structure_score": 0.0,
         "validation_score": 0.0,
         "hallucination_penalty": 0.0,
         "complexity_penalty": 0.0
@@ -75,7 +59,7 @@ def evaluate_pipeline(
 
     recommendations = []
 
-    dax_lower = dax.lower()
+    sql_lower = sql.lower()
 
     if rewritten and len(
         rewritten.split()
@@ -88,6 +72,7 @@ def evaluate_pipeline(
         score += 0.15
 
     else:
+
         recommendations.append(
             "Improve semantic query rewriting."
         )
@@ -100,12 +85,8 @@ def evaluate_pipeline(
 
         score += 0.15
 
-        if len(tables) > 10:
-            recommendations.append(
-                "Too many tables selected; improve schema precision."
-            )
-
     else:
+
         recommendations.append(
             "No relevant tables selected."
         )
@@ -119,6 +100,7 @@ def evaluate_pipeline(
         score += 0.15
 
     else:
+
         recommendations.append(
             "No relevant dimensions selected."
         )
@@ -132,53 +114,44 @@ def evaluate_pipeline(
         score += 0.15
 
     else:
+
         recommendations.append(
             "No relevant measures selected."
         )
 
-    if relationships:
+    if joins:
 
         breakdown[
-            "relationship_score"
+            "join_score"
         ] = 0.10
 
         score += 0.10
 
-    else:
-        recommendations.append(
-            "Relationship planning weak."
-        )
-
-    dax_score = 0.0
-
-    if dax_lower.startswith(
-        "evaluate"
+    if sql_lower.startswith(
+        "select"
     ):
-        dax_score += 0.05
 
-    if "summarizecolumns" in dax_lower:
-        dax_score += 0.05
+        breakdown[
+            "sql_structure_score"
+        ] += 0.10
 
-    if "filter(" in dax_lower:
-        dax_score += 0.05
+        score += 0.10
 
-    if re.search(
-        r'"metric"|sales revenue|sales volume',
-        dax,
-        re.IGNORECASE
-    ):
-        dax_score += 0.05
+    if "group by" in sql_lower:
 
-    breakdown[
-        "dax_structure_score"
-    ] = dax_score
+        breakdown[
+            "sql_structure_score"
+        ] += 0.05
 
-    score += dax_score
+        score += 0.05
 
-    if dax_score < 0.15:
-        recommendations.append(
-            "Generated DAX structure is weak."
-        )
+    if "order by" in sql_lower:
+
+        breakdown[
+            "sql_structure_score"
+        ] += 0.05
+
+        score += 0.05
 
     if validation.get(
         "valid",
@@ -192,27 +165,26 @@ def evaluate_pipeline(
         score += 0.10
 
     else:
+
         score -= 0.10
 
         recommendations.append(
-            "DAX validation failed; syntax or semantic issues detected."
+            "SQL validation failed."
         )
 
     hallucinated_terms = [
-        "branchdim",
-        "salesdim",
-        "datedimensions",
-        "'date'",
-        "'sales'",
         "factsales",
+        "branchdim",
+        "datedim",
+        "salesdim",
         "customerdim",
         "productdim",
         "unknown_table",
-        "unknown_measure"
+        "unknown_column"
     ]
 
     hallucination_found = any(
-        term in dax_lower
+        term in sql_lower
         for term in hallucinated_terms
     )
 
@@ -228,18 +200,18 @@ def evaluate_pipeline(
             "Hallucinated schema detected."
         )
 
-    nested_filters = len(
+    nested_selects = len(
         re.findall(
-            r"\bfilter\s*\(",
-            dax_lower
+            r"\bselect\b",
+            sql_lower
         )
     )
 
-    if nested_filters > 3:
+    if nested_selects > 4:
 
         penalty = min(
             0.10,
-            nested_filters * 0.02
+            nested_selects * 0.02
         )
 
         breakdown[
@@ -249,57 +221,38 @@ def evaluate_pipeline(
         score -= penalty
 
         recommendations.append(
-            "Too many nested FILTER statements."
+            "SQL query overly complex."
         )
 
     complexity = 0
 
     complexity += len(
         re.findall(
-            r"\bcalculate\b",
-            dax_lower
+            r"\bjoin\b",
+            sql_lower
         )
     )
 
     complexity += len(
         re.findall(
-            r"\bvar\b",
-            dax_lower
+            r"\bcase\b",
+            sql_lower
         )
     )
 
     complexity += len(
         re.findall(
-            r"\breturn\b",
-            dax_lower
+            r"\bgroup by\b",
+            sql_lower
         )
     )
 
     complexity += len(
         re.findall(
-            r"\baddcolumns\b",
-            dax_lower
+            r"\bover\b",
+            sql_lower
         )
     )
-
-    complexity += nested_filters
-
-    if complexity > 4:
-
-        penalty = min(
-            0.15,
-            complexity * 0.03
-        )
-
-        breakdown[
-            "complexity_penalty"
-        ] -= penalty
-
-        score -= penalty
-
-        recommendations.append(
-            "DAX overly complex; simplify."
-        )
 
     score = max(
         0.0,
@@ -344,7 +297,7 @@ def evaluate_pipeline(
 
         "measures": measures,
 
-        "relationships": relationships,
+        "joins": joins,
 
         "retrieval_count": len(
             retrieved_rows
@@ -352,13 +305,11 @@ def evaluate_pipeline(
 
         "rewritten_query": rewritten,
 
-        "dax_length": len(
-            dax
+        "sql_length": len(
+            sql
         ),
 
         "complexity_score": complexity,
-
-        "nested_filter_count": nested_filters,
 
         "hallucination_detected": hallucination_found,
 

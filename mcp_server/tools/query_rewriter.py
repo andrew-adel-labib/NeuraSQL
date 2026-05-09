@@ -10,10 +10,25 @@ from mcp_server.tools.schema_cache import (
 
 
 QUERY_REWRITE_PROMPT = """
-You are an enterprise BI semantic query optimizer.
+You are an enterprise automotive ERP semantic query optimizer.
 
 Your task:
 Convert vague business questions into highly structured analytical intent.
+
+====================================================
+AUTOMOTIVE ERP DOMAINS
+====================================================
+
+- Workshop invoices
+- Workshop revenue
+- Parts inventory
+- Parts sales
+- Vehicle inventory
+- Vehicle sales
+- Vehicle profitability
+- Mechanics performance
+- Branch operations
+- Franchise operations
 
 ====================================================
 OBJECTIVES
@@ -21,50 +36,64 @@ OBJECTIVES
 
 You MUST identify:
 
-1. Primary Measure
-2. Dimensions
-3. Filters
-4. Time Grain
+1. Business domain
+2. Primary measure
+3. Dimensions
+4. Filters
+5. Time grain
+6. Ranking intent
+7. Trend analysis intent
 
 ====================================================
-RULES
+STRICT RULES
 ====================================================
 
 - Rewrite clearly
 - Expand vague business language
 - Infer analytical meaning
 - Preserve business objective
-- Normalize for BI planning
+- Normalize for SQL planning
 - DO NOT generate SQL
-- DO NOT generate DAX
 - Return ONLY rewritten analytical query
 """
 
 
 QUERY_INTENT_PROMPT = """
-You are an enterprise BI semantic planner.
+You are an enterprise automotive ERP semantic planner.
 
 Convert the user query into structured JSON.
 
-Return ONLY JSON:
+Return ONLY JSON.
+
+OUTPUT FORMAT:
 
 {
-  "measure": "",
-  "dimensions": [],
-  "filters": {},
-  "time_grain": "",
-  "ranking": {
-      "enabled": false,
-      "type": null,
-      "limit": null
-  },
-  "comparison": false,
-  "time_series": false
+    "domain": "",
+    "measure": "",
+    "dimensions": [],
+    "filters": {},
+    "time_grain": "",
+    "ranking": {
+        "enabled": false,
+        "type": null,
+        "limit": null
+    },
+    "comparison": false,
+    "time_series": false,
+    "aggregation": ""
 }
+
+STRICT RULES:
+
+- NEVER invent schema
+- NEVER invent measures
+- NEVER explain
+- Return ONLY JSON
 """
 
 
 def clean_text(text: str) -> str:
+
     text = text.strip()
 
     text = re.sub(
@@ -91,13 +120,17 @@ def clean_text(text: str) -> str:
 
 
 def clean_json(text: str):
+
     text = clean_text(text)
 
     try:
+
         return json.loads(text)
 
     except Exception:
+
         return {
+            "domain": "",
             "measure": "",
             "dimensions": [],
             "filters": {},
@@ -108,18 +141,15 @@ def clean_json(text: str):
                 "limit": None
             },
             "comparison": False,
-            "time_series": False
+            "time_series": False,
+            "aggregation": ""
         }
 
 
 def rewrite_query(
     question: str,
     model_provider: str = "claude"
-) -> str:
-    """
-    Converts raw user business question
-    into optimized semantic analytical query
-    """
+):
 
     cache_key = (
         f"rewrite::{model_provider}::{question}"
@@ -130,6 +160,7 @@ def rewrite_query(
     )
 
     if cached:
+
         return cached[
             "rewritten_query"
         ]
@@ -158,9 +189,6 @@ def extract_query_intent(
     question: str,
     model_provider: str = "claude"
 ):
-    """
-    Produces structured BI planning JSON
-    """
 
     cache_key = (
         f"intent::{model_provider}::{question}"
@@ -171,6 +199,7 @@ def extract_query_intent(
     )
 
     if cached:
+
         return cached
 
     response = chat(
@@ -195,13 +224,6 @@ def process_query(
     question: str,
     model_provider: str = "claude"
 ):
-    """
-    Full enterprise preprocessing:
-    - Rewrite query
-    - Extract intent
-    - Cache both layers
-    - Multi-model support
-    """
 
     cache_key = (
         f"full_query::{model_provider}::{question}"
@@ -212,6 +234,7 @@ def process_query(
     )
 
     if cached:
+
         return cached
 
     rewritten = rewrite_query(

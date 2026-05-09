@@ -12,7 +12,7 @@ from mcp_server.tools.schema_cache import (
 
 def build_schema_context(schema: Dict) -> str:
     """
-    Builds complete semantic model context:
+    Builds semantic schema context:
     - Tables
     - Columns
     - Measures
@@ -24,23 +24,34 @@ def build_schema_context(schema: Dict) -> str:
     lines.append("TABLES:")
 
     for table in schema.get("tables", []):
+
         lines.append(
             f"""
 Table: {table.get("name")}
-Columns: {", ".join(table.get("columns", []))}
+
+Columns:
+{", ".join(table.get("columns", []))}
 """
         )
 
     lines.append("\nMEASURES:")
 
-    for measure in schema.get("measures", []):
+    for measure in schema.get(
+        "measures",
+        []
+    ):
+
         lines.append(
             f"- {measure.get('name')}"
         )
 
     lines.append("\nRELATIONSHIPS:")
 
-    for rel in schema.get("relationships", []):
+    for rel in schema.get(
+        "relationships",
+        []
+    ):
+
         lines.append(
             f"- {rel}"
         )
@@ -49,6 +60,7 @@ Columns: {", ".join(table.get("columns", []))}
 
 
 def clean_json(text: str):
+
     text = text.strip()
 
     text = re.sub(
@@ -74,9 +86,11 @@ def clean_json(text: str):
     text = text.strip()
 
     try:
+
         return json.loads(text)
 
     except Exception:
+
         return None
 
 
@@ -86,18 +100,7 @@ def rerank_schema(
     model_provider: str = "claude"
 ):
     """
-    Determines ranked:
-    - Tables
-    - Dimensions
-    - Measures
-    - Relationships
-
-    Multi-model support:
-    - Claude
-    - OpenAI
-    - Groq
-
-    Uses cache to avoid repeated LLM reranking.
+    Enterprise automotive ERP semantic reranker
     """
 
     cache_key = (
@@ -109,6 +112,7 @@ def rerank_schema(
     )
 
     if cached:
+
         return cached
 
     schema_context = build_schema_context(
@@ -116,7 +120,7 @@ def rerank_schema(
     )
 
     prompt = f"""
-You are an enterprise BI semantic planning engine.
+You are an enterprise automotive ERP semantic reranking engine.
 
 Your job:
 Analyze the business query and determine the MOST relevant:
@@ -125,6 +129,23 @@ Analyze the business query and determine the MOST relevant:
 2. Dimensions
 3. Measures
 4. Relationships
+
+====================================================
+AUTOMOTIVE ERP DOMAINS
+====================================================
+
+Workshop:
+- POS_WIPInvoiceHeaders
+- POS_WIPInvoiceDetails
+
+Parts Inventory:
+- SM_PartsStock
+
+Vehicle Sales:
+- VSB_VehicleSalesInvoiceHeaders
+
+Vehicle Inventory:
+- VSB_VehicleStock
 
 ====================================================
 USER QUERY
@@ -139,28 +160,20 @@ SEMANTIC MODEL
 {schema_context}
 
 ====================================================
-RULES
+STRICT RULES
 ====================================================
 
-- Use ONLY schema provided
+- Use ONLY provided schema
 - NEVER invent tables
 - NEVER invent columns
 - NEVER invent measures
 - NEVER invent relationships
 - Rank by business relevance
-- Include:
-    - Branch hierarchy
-    - Customer hierarchy
-    - Customer channel
-    - Item hierarchy
-    - Geographic hierarchy
-    - Salesman hierarchy
-    - Date hierarchy
-- Include supporting dimension tables
-- Include trend/date relationships for time-series
-- Include branch/geography relationships for location filters
-- Include product/customer relationships for segmentation
 - Prefer exact schema matches
+- Include supporting joins when necessary
+- Include date/time relevance for trends
+- Include branch/company relevance for organizational analysis
+- Include vehicle/parts relevance for operational analysis
 - Return ONLY JSON
 
 ====================================================
@@ -211,6 +224,7 @@ OUTPUT FORMAT
     )
 
     if not parsed:
+
         parsed = fallback_rerank(
             schema
         )
@@ -253,7 +267,7 @@ def fallback_rerank(schema: Dict):
         for col in t.get(
             "columns",
             []
-        )[:3]:
+        )[:5]:
 
             dimensions.append({
                 "table": t["name"],
@@ -297,6 +311,7 @@ def extract_ranked_components(
     schema: Dict,
     model_provider: str = "claude"
 ):
+
     ranked = rerank_schema(
         query,
         schema,
@@ -308,23 +323,28 @@ def extract_ranked_components(
             "tables",
             []
         ),
+
         "dimensions": ranked.get(
             "dimensions",
             []
         ),
+
         "measures": ranked.get(
             "measures",
             []
         ),
+
         "relationships": ranked.get(
             "relationships",
             []
         ),
+
         "model_provider": model_provider
     }
 
 
 def get_top_tables(ranked_schema):
+
     return [
         x["name"]
         for x in ranked_schema.get(
@@ -335,6 +355,7 @@ def get_top_tables(ranked_schema):
 
 
 def get_top_dimensions(ranked_schema):
+
     return [
         {
             "table": x["table"],
@@ -348,6 +369,7 @@ def get_top_dimensions(ranked_schema):
 
 
 def get_top_measures(ranked_schema):
+
     return [
         x["name"]
         for x in ranked_schema.get(
@@ -358,6 +380,7 @@ def get_top_measures(ranked_schema):
 
 
 def get_top_relationships(ranked_schema):
+
     return [
         x["name"]
         for x in ranked_schema.get(

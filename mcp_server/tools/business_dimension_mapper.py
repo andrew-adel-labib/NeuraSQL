@@ -1,106 +1,28 @@
-import difflib
-from mcp_server.tools.business_dimensions import (
-    extract_business_dimensions
-)
+DIMENSION_MAPPING = {
 
+    "Branch": "branches",
 
-class DimensionValueMapper:
-    """
-    Corrects user-entered business dimension values
-    against actual database dimension values.
+    "Company": "companies",
 
-    Example:
-    distributor -> Distributors
-    cairo -> Cairo Branch
-    salesman 1 -> SalesmanName 1
-    """
+    "Entity": "entities",
 
-    def __init__(self):
-        self.dimensions = extract_business_dimensions()
+    "Department": "departments",
 
-    def normalize_text(self, text: str):
-        return text.lower().strip()
+    "Franchise": "franchises",
 
-    def find_best_match(
-        self,
-        user_value: str,
-        possible_values: list,
-        cutoff: float = 0.7
-    ):
-        normalized_map = {
-            self.normalize_text(v): v
-            for v in possible_values
-        }
+    "Sale Type": "sale_types",
 
-        matches = difflib.get_close_matches(
-            self.normalize_text(user_value),
-            normalized_map.keys(),
-            n=1,
-            cutoff=cutoff
-        )
+    "Vehicle Model": "vehicle_models",
 
-        if matches:
-            return normalized_map[matches[0]]
+    "Mechanic": "mechanics",
 
-        return user_value
+    "Part": "parts",
 
-    def correct_filters(
-        self,
-        extracted_filters: dict
-    ):
-        corrected = {}
+    "Vehicle": "vehicle_numbers",
 
-        DIMENSION_MAPPING = {
-            "Branch": "branches",
-            "Salesman": "salesmen",
-            "Region": "regions",
-            "District": "districts",
-            "City": "cities",
-            "Area": "areas",
+    "Vehicle Type": "vehicle_types",
 
-            "Customer Channel": "customer_category",
-            "Customer Sub-Channel": "customer_category2",
-            "Customer Level 3": "customer_category3",
-            "Customer Level 4": "customer_category4",
+    "Vehicle Location": "vehicle_locations",
 
-            "Master Brand": "item_category1",
-            "Sub Brand": "item_category2",
-            "Item Level 3": "item_category3",
-            "Item Level 4": "item_category4",
-
-            "Company": "company_codes"
-        }
-
-        for dimension, value in extracted_filters.items():
-
-            db_dimension_key = DIMENSION_MAPPING.get(
-                dimension
-            )
-
-            if not db_dimension_key:
-                corrected[dimension] = value
-                continue
-
-            possible_values = self.dimensions.get(
-                db_dimension_key,
-                []
-            )
-
-            corrected_value = self.find_best_match(
-                value,
-                possible_values
-            )
-
-            corrected[dimension] = corrected_value
-
-        return corrected
-
-
-def correct_user_dimension_filters(
-    filters: dict
-):
-    mapper = DimensionValueMapper()
-
-    return mapper.correct_filters(
-        filters
-    )
+    "Parts Category": "parts_categories"
+}

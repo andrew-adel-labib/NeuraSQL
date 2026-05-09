@@ -4,109 +4,99 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+
 SQL_DIMENSION_QUERIES = {
-    "customer_category": """
-        SELECT DISTINCT Category
-        FROM QBS.dbo.QBS_SighCast_Customer
-        WHERE Category IS NOT NULL
-    """,
-
-    "customer_category2": """
-        SELECT DISTINCT Category2
-        FROM QBS.dbo.QBS_SighCast_Customer
-        WHERE Category2 IS NOT NULL
-    """,
-
-    "customer_category3": """
-        SELECT DISTINCT Category3
-        FROM QBS.dbo.QBS_SighCast_Customer
-        WHERE Category3 IS NOT NULL
-    """,
-
-    "customer_category4": """
-        SELECT DISTINCT Category4
-        FROM QBS.dbo.QBS_SighCast_Customer
-        WHERE Category4 IS NOT NULL
-    """,
-
-    "item_category1": """
-        SELECT DISTINCT Category1
-        FROM QBS.dbo.QBS_SighCast_Item
-        WHERE Category1 IS NOT NULL
-    """,
-
-    "item_category2": """
-        SELECT DISTINCT Category2
-        FROM QBS.dbo.QBS_SighCast_Item
-        WHERE Category2 IS NOT NULL
-    """,
-
-    "item_category3": """
-        SELECT DISTINCT Category3
-        FROM QBS.dbo.QBS_SighCast_Item
-        WHERE Category3 IS NOT NULL
-    """,
-
-    "item_category4": """
-        SELECT DISTINCT Category4
-        FROM QBS.dbo.QBS_SighCast_Item
-        WHERE Category4 IS NOT NULL
-    """,
 
     "branches": """
-        SELECT DISTINCT Branch_Name
-        FROM QBS.dbo.QBS_SighCast_Branch
-        WHERE Branch_Name IS NOT NULL
+        SELECT DISTINCT System_Branch_Name
+        FROM POS_WIPInvoiceHeaders
+        WHERE System_Branch_Name IS NOT NULL
     """,
 
-    "company_codes": """
-        SELECT DISTINCT CompanyCode
-        FROM QBS.dbo.QBS_SighCast_Company
-        WHERE CompanyCode IS NOT NULL
+    "companies": """
+        SELECT DISTINCT System_Company_Name
+        FROM POS_WIPInvoiceHeaders
+        WHERE System_Company_Name IS NOT NULL
     """,
 
-    "areas": """
-        SELECT DISTINCT AreaNo
-        FROM QBS.dbo.QBS_SighCast_Customer
-        WHERE AreaNo IS NOT NULL
+    "entities": """
+        SELECT DISTINCT LegelEntity_Name
+        FROM POS_WIPInvoiceHeaders
+        WHERE LegelEntity_Name IS NOT NULL
     """,
 
-    "cities": """
-        SELECT DISTINCT CityNo
-        FROM QBS.dbo.QBS_SighCast_Customer
-        WHERE CityNo IS NOT NULL
+    "departments": """
+        SELECT DISTINCT Department
+        FROM POS_WIPInvoiceHeaders
+        WHERE Department IS NOT NULL
     """,
 
-    "districts": """
-        SELECT DISTINCT DistrictNo
-        FROM QBS.dbo.QBS_SighCast_Customer
-        WHERE DistrictNo IS NOT NULL
+    "franchises": """
+        SELECT DISTINCT Franchise_Code
+        FROM POS_WIPInvoiceHeaders
+        WHERE Franchise_Code IS NOT NULL
     """,
 
-    "regions": """
-        SELECT DISTINCT RegionNo
-        FROM QBS.dbo.QBS_SighCast_Customer
-        WHERE RegionNo IS NOT NULL
+    "sale_types": """
+        SELECT DISTINCT Sale_Type
+        FROM POS_WIPInvoiceHeaders
+        WHERE Sale_Type IS NOT NULL
     """,
 
-    "salesmen": """
-        SELECT DISTINCT SalesmanNameA
-        FROM QBS.dbo.QBS_SighCast_Salesman
-        WHERE SalesmanNameA IS NOT NULL
+    "vehicle_models": """
+        SELECT DISTINCT Model
+        FROM POS_WIPInvoiceHeaders
+        WHERE Model IS NOT NULL
+    """,
+
+    "mechanics": """
+        SELECT DISTINCT WL_Mechanic1
+        FROM POS_WIPInvoiceDetails
+        WHERE WL_Mechanic1 IS NOT NULL
+    """,
+
+    "parts": """
+        SELECT DISTINCT PartNo_RTSCode
+        FROM POS_WIPInvoiceDetails
+        WHERE PartNo_RTSCode IS NOT NULL
+    """,
+
+    "vehicle_numbers": """
+        SELECT DISTINCT Vehicle_Number
+        FROM VSB_VehicleStock
+        WHERE Vehicle_Number IS NOT NULL
+    """,
+
+    "vehicle_types": """
+        SELECT DISTINCT Vehicle_Type
+        FROM VSB_VehicleStock
+        WHERE Vehicle_Type IS NOT NULL
+    """,
+
+    "vehicle_locations": """
+        SELECT DISTINCT Vehicle_Location
+        FROM VSB_VehicleStock
+        WHERE Vehicle_Location IS NOT NULL
+    """,
+
+    "parts_categories": """
+        SELECT DISTINCT Parts_Category
+        FROM SM_PartsStock
+        WHERE Parts_Category IS NOT NULL
     """
 }
 
 
 def get_sql_connection():
+
     driver = os.getenv("DB_DRIVER")
     server = os.getenv("DB_SERVER")
     database = os.getenv("DB_NAME")
-    trusted = os.getenv("DB_TRUSTED_CONNECTION", "yes")
 
-    if not all([driver, server, database]):
-        raise ValueError(
-            "Missing DB config in .env"
-        )
+    trusted = os.getenv(
+        "DB_TRUSTED_CONNECTION",
+        "yes"
+    )
 
     conn_str = (
         f"DRIVER={{{driver}}};"
@@ -120,17 +110,15 @@ def get_sql_connection():
 
 
 def extract_business_dimensions():
-    """
-    Extract only business dimension values from SQL Server QBS DB
-    for semantic enrichment.
-    """
 
     conn = get_sql_connection()
+
     cursor = conn.cursor()
 
     extracted_dimensions = {}
 
     try:
+
         for dimension_name, query in SQL_DIMENSION_QUERIES.items():
 
             cursor.execute(query)
@@ -147,15 +135,15 @@ def extract_business_dimensions():
             )
 
     finally:
+
         conn.close()
 
     return extracted_dimensions
 
 
 if __name__ == "__main__":
-    import json
 
-    print("Extracting business dimensions from QBS database...")
+    import json
 
     dimensions = extract_business_dimensions()
 

@@ -12,25 +12,65 @@ FORBIDDEN_KEYWORDS = [
     "create",
     "exec",
     "execute",
-    "merge"
+    "merge",
+    "grant",
+    "revoke",
+    "deny",
+    "backup",
+    "restore",
+    "shutdown"
 ]
 
 
 def validate(sql: str):
 
+    if not sql:
+        raise SecurityViolation(
+            "Empty SQL query"
+        )
+
     sql_clean = sql.strip().lower()
 
-    if not (sql_clean.startswith("select") or sql_clean.startswith("with")):
+    sql_clean = re.sub(
+        r"\s+",
+        " ",
+        sql_clean
+    )
+
+    if "--" in sql_clean:
         raise SecurityViolation(
-            "Only SELECT queries are allowed",
-            context={"sql_start": sql_clean[:20]}
+            "Inline comments are not allowed"
+        )
+
+    if "/*" in sql_clean or "*/" in sql_clean:
+        raise SecurityViolation(
+            "Block comments are not allowed"
+        )
+
+    if ";" in sql_clean[:-1]:
+        raise SecurityViolation(
+            "Multiple SQL statements are not allowed"
+        )
+
+    if not (
+        sql_clean.startswith("select")
+        or sql_clean.startswith("with")
+    ):
+        raise SecurityViolation(
+            "Only SELECT queries are allowed"
         )
 
     for keyword in FORBIDDEN_KEYWORDS:
-        if re.search(rf"\b{keyword}\b", sql_clean):
+
+        pattern = rf"\b{keyword}\b"
+
+        if re.search(pattern, sql_clean):
+
             raise SecurityViolation(
                 "Dangerous SQL detected",
-                context={"keyword": keyword}
+                context={
+                    "keyword": keyword
+                }
             )
 
     return True

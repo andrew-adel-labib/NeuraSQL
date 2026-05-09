@@ -1,79 +1,145 @@
 import json
 import re
-import pandas as pd
-from backend.app.llm.groq_client import chat
+
+from backend.app.llm.client import chat
+
+from mcp_server.tools.schema_retriever import (
+    retrieve_schema
+)
 
 
-ARCH_PATH = "DB_Architecture/DB_Architecture.csv"
+schema = retrieve_schema()
 
+schema_lines = []
 
-try:
-    df_arch = pd.read_csv(ARCH_PATH)
-    df_arch.columns = df_arch.columns.str.strip().str.upper()
+for table in schema["tables"]:
 
-    schema_lines = []
-    grouped = df_arch.groupby("TABLE_NAME")
+    columns = ", ".join(
+        table["columns"]
+    )
 
-    for table, group in grouped:
-        columns = ", ".join(group["COLUMN_NAME"].tolist())
-        schema_lines.append(f"{table}: {columns}")
+    schema_lines.append(
+        f"{table['name']}: {columns}"
+    )
 
-    DB_SCHEMA_TEXT = "\n".join(schema_lines)
-
-except Exception as e:
-    DB_SCHEMA_TEXT = "Schema not loaded."
-    print("Failed to load DB Architecture:", e)
+DB_SCHEMA_TEXT = "\n".join(
+    schema_lines
+)
 
 
 INTERPRET_PROMPT = f"""
-You are a forecasting query interpreter.
+You are an enterprise automotive ERP SQL query interpreter.
 
-You MUST choose only from this database schema:
+You MUST choose ONLY from this database schema.
 
----------------- DATABASE SCHEMA ----------------
+====================================================
+DATABASE SCHEMA
+====================================================
+
 {DB_SCHEMA_TEXT}
---------------------------------------------------
 
-Convert the user question into structured JSON:
+====================================================
+
+AUTOMOTIVE ERP DOMAINS
+====================================================
+
+- Workshop invoices
+- Workshop revenue
+- Parts inventory
+- Parts sales
+- Vehicle inventory
+- Vehicle sales
+- Vehicle profitability
+- Mechanics performance
+- Branch operations
+- Franchise operations
+
+====================================================
+
+Convert the user question into structured JSON.
+
+OUTPUT FORMAT:
 
 {{
-  "target_table": "",
-  "target_column": "",
-  "date_column": "",
-  "aggregation": "sum",
-  "horizon_months": 3
+    "domain": "",
+    "target_tables": [],
+    "target_columns": [],
+    "measures": [],
+    "dimensions": [],
+    "filters": {{}},
+    "time_context": "",
+    "aggregation": "",
+    "ranking": false,
+    "trend_analysis": false
 }}
 
-Return ONLY pure JSON.
-Do NOT wrap in ```json
-Do NOT add explanations.
-Do NOT add text before or after JSON.
+====================================================
+STRICT RULES
+====================================================
+
+- ONLY use provided schema
+- NEVER invent tables
+- NEVER invent columns
+- NEVER explain
+- Return ONLY JSON
 """
 
 
-def clean_json_response(text: str) -> str:
-    """
-    Remove markdown or `json` wrappers from LLM output.
-    """
+def clean_json_response(text: str):
 
-    text = re.sub(r"```json", "", text, flags=re.IGNORECASE)
-    text = re.sub(r"```", "", text)
+    text = re.sub(
+        r"```json",
+        "",
+        text,
+        flags=re.IGNORECASE
+    )
 
-    text = re.sub(r"^json\s*", "", text.strip(), flags=re.IGNORECASE)
+    text = re.sub(
+        r"```",
+        "",
+        text
+    )
+
+    text = re.sub(
+        r"^json\s*",
+        "",
+        text.strip(),
+        flags=re.IGNORECASE
+    )
 
     return text.strip()
 
 
-def interpret(question: str):
+def interpret(
+    question: str,
+    provider: str = "claude"
+):
 
     response = chat(
         prompt=question,
-        system_prompt=INTERPRET_PROMPT
+        system_prompt=INTERPRET_PROMPT,
+        provider=provider
     )
 
-    cleaned = clean_json_response(response)
+    cleaned = clean_json_response(
+        response
+    )
 
     try:
+
         return json.loads(cleaned)
-    except Exception as e:
-        raise ValueError(f"LLM returned invalid JSON:\n{cleaned}")
+
+    except Exception:
+
+        return {
+            "domain": "",
+            "target_tables": [],
+            "target_columns": [],
+            "measures": [],
+            "dimensions": [],
+            "filters": {},
+            "time_context": "",
+            "aggregation": "",
+            "ranking": False,
+            "trend_analysis": False
+        }

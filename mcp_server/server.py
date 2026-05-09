@@ -1,25 +1,54 @@
-import os
-import requests
-import msal
-import traceback
 import pandas as pd
 
-from dotenv import load_dotenv
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
+from fastapi import HTTPException
 
-from datetime import datetime
-from decimal import Decimal
-
-from mcp_server.tools.dax_generator import (
-    generate_dax
+from mcp_server.tools.sql_generator import (
+    generate_sql
 )
 
-from mcp_server.tools.dax_executor import (
-    execute_dax
+from mcp_server.tools.sql_validator import (
+    validate
+)
+
+from mcp_server.tools.sql_executer import (
+    execute_sql
+)
+
+from mcp_server.tools.cache import (
+    load_cache
+)
+
+from mcp_server.tools.nl_explainer import (
+    explain
 )
 
 from mcp_server.tools.answer_summarizer import (
     summarize_answer
+)
+
+from mcp_server.tools.query_rewriter import (
+    process_query
+)
+
+from mcp_server.tools.query_interpreter import (
+    interpret
+)
+
+from mcp_server.tools.rag_semantic import (
+    retrieve_context
+)
+
+from mcp_server.tools.semantic_planner import (
+    plan_semantics
+)
+
+from mcp_server.tools.dimension_selector import (
+    select_dimensions
+)
+
+from mcp_server.tools.evaluation import (
+    evaluate_pipeline
 )
 
 from mcp_server.tools.llm_judge import (
@@ -27,289 +56,213 @@ from mcp_server.tools.llm_judge import (
 )
 
 
-load_dotenv()
-
 app = FastAPI(
-    title="AI BI Copilot"
+    title="Enterprise AI SQL Analytics Copilot"
 )
 
 
-TENANT_ID = os.getenv("PBI_TENANT_ID")
-CLIENT_ID = os.getenv("PBI_CLIENT_ID")
-CLIENT_SECRET = os.getenv("PBI_CLIENT_SECRET")
-WORKSPACE_ID = os.getenv("PBI_WORKSPACE_ID")
-REPORT_ID = os.getenv("PBI_REPORT_ID")
-DATASET_ID = os.getenv("PBI_DATASET_ID")
+@app.on_event("startup")
+def startup_event():
 
-AUTHORITY = (
-    f"https://login.microsoftonline.com/{TENANT_ID}"
-)
-
-SCOPE = [
-    "https://analysis.windows.net/powerbi/api/.default"
-]
-
-
-def get_access_token():
-    msal_app = msal.ConfidentialClientApplication(
-        CLIENT_ID,
-        authority=AUTHORITY,
-        client_credential=CLIENT_SECRET
+    print(
+        "\n🚀 Loading ERP database cache...\n"
     )
 
-    result = msal_app.acquire_token_for_client(
-        scopes=SCOPE
+    load_cache()
+
+    print(
+        "\n✅ ERP database cache loaded.\n"
     )
 
-    if "access_token" not in result:
-        raise Exception(result)
 
-    return result["access_token"]
+@app.get("/")
+async def root():
 
-
-def generate_embed_token():
-    try:
-        access_token = get_access_token()
-
-        url = (
-            f"https://api.powerbi.com/v1.0/myorg/groups/"
-            f"{WORKSPACE_ID}/reports/{REPORT_ID}/GenerateToken"
+    return {
+        "status": "running",
+        "service": (
+            "Enterprise AI SQL Analytics Copilot"
         )
-
-        headers = {
-            "Authorization": f"Bearer {access_token}",
-            "Content-Type": "application/json"
-        }
-
-        body = {
-            "accessLevel": "View",
-            "datasets": [
-                {"id": DATASET_ID}
-            ],
-            "reports": [
-                {"id": REPORT_ID}
-            ]
-        }
-
-        res = requests.post(
-            url,
-            headers=headers,
-            json=body
-        )
-
-        if res.status_code != 200:
-            return None
-
-        return res.json().get("token")
-
-    except Exception:
-        return None
-
-
-def extract_filters(question: str):
-    filters = []
-
-    q = question.lower()
-
-    if "last year" in q:
-        filters.append({
-            "$schema": "http://powerbi.com/product/schema#basic",
-            "target": {
-                "table": "Date",
-                "column": "Year"
-            },
-            "operator": "In",
-            "values": [2025]
-        })
-
-    if "this year" in q:
-        filters.append({
-            "$schema": "http://powerbi.com/product/schema#basic",
-            "target": {
-                "table": "Date",
-                "column": "Year"
-            },
-            "operator": "In",
-            "values": [2026]
-        })
-
-    if "january" in q:
-        filters.append({
-            "$schema": "http://powerbi.com/product/schema#basic",
-            "target": {
-                "table": "Date",
-                "column": "Month"
-            },
-            "operator": "In",
-            "values": [1]
-        })
-
-    return filters
-
-
-def normalize_value(v):
-    if isinstance(v, datetime):
-        return v.isoformat()
-
-    if isinstance(v, Decimal):
-        return float(v)
-
-    if "DateTime" in str(type(v)):
-        try:
-            return str(v)
-        except:
-            return None
-
-    return v
-
-
-def normalize_rows(rows):
-    return [
-        [
-            normalize_value(cell)
-            for cell in row
-        ]
-        for row in rows
-    ]
+    }
 
 
 @app.post("/ask")
 async def ask(request: dict):
 
-    question = request.get("question")
+    question = request.get(
+        "question"
+    )
 
     model_provider = request.get(
-        "model_provider",
+        "provider",
         "claude"
     )
 
     if not question:
+
         raise HTTPException(
             status_code=400,
-            detail="Question required"
+            detail="Question is required."
         )
 
     try:
 
-        dax_result = generate_dax(
-            question=question,
+
+        query_processing = process_query(
+            question,
             model_provider=model_provider
         )
 
-        dax = dax_result["dax"]
-
-        validation = dax_result.get(
-            "validation",
-            {
-                "valid": True,
-                "errors": []
-            }
+        rewritten_query = query_processing.get(
+            "rewritten_query",
+            question
         )
 
-        execution_error = None
+        query_intent = query_processing.get(
+            "intent",
+            {}
+        )
 
-        try:
-            if validation["valid"]:
-                rows, cols = execute_dax(dax)
-            else:
-                rows, cols = [], []
 
-        except Exception as exec_error:
-            rows, cols = [], []
-            execution_error = str(exec_error)
+        semantic_context = retrieve_context(
+            rewritten_query
+        )
 
-        rows = normalize_rows(rows)
+
+        semantic_plan = plan_semantics(
+            rewritten_query,
+            semantic_context,
+            model_provider=model_provider
+        )
+
+
+        dimension_plan = select_dimensions(
+            rewritten_query,
+            semantic_context,
+            model_provider=model_provider
+        )
+
+
+        sql = generate_sql(
+            rewritten_query
+        )
+
+
+        validate(sql)
+
+        validation_result = {
+            "valid": True
+        }
+
+
+        rows, cols = execute_sql(sql)
 
         df = pd.DataFrame(
             rows,
             columns=cols
         )
 
+
+        explanation = explain(
+            question,
+            rows,
+            cols
+        )
+
+
         summary = summarize_answer(
-            question=question,
-            rows=df.to_dict(
-                orient="records"
-            ),
+            question,
+            rows,
             model_provider=model_provider
         )
 
-        llm_judge = judge_pipeline(
+
+        evaluation = evaluate_pipeline(
             user_query=question,
-            rewritten_query=dax_result[
-                "rewritten_query"
-            ],
-            semantic_plan=dax_result[
-                "ranked_schema"
-            ],
-            dax=dax,
-            retrieved_rows=df.to_dict(
-                orient="records"
+            rewritten=rewritten_query,
+            semantic_plan=semantic_plan,
+            sql=sql,
+            validation=validation_result,
+            retrieved_rows=rows,
+            tables=semantic_plan.get(
+                "tables",
+                []
             ),
+            dimensions=semantic_plan.get(
+                "dimensions",
+                []
+            ),
+            measures=semantic_plan.get(
+                "measures",
+                []
+            ),
+            joins=semantic_plan.get(
+                "joins",
+                []
+            ),
+            provider=model_provider
+        )
+
+
+        qa_judge = judge_pipeline(
+            user_query=question,
+            rewritten_query=rewritten_query,
+            semantic_plan=semantic_plan,
+            sql=sql,
+            retrieved_rows=rows,
             summary=summary,
             model_provider=model_provider
         )
 
-        embed_token = generate_embed_token()
-
-        embed_url = (
-            f"https://app.powerbi.com/reportEmbed?"
-            f"reportId={REPORT_ID}&groupId={WORKSPACE_ID}"
-        )
-
-        filters = extract_filters(question)
 
         return {
-            "mode": "powerbi_embedded",
 
-            "model_provider": model_provider,
+            "status": "success",
+
+            "mode": "sql_analytics",
+
+            "provider": model_provider,
 
             "question": question,
 
-            "rewritten_query": dax_result[
-                "rewritten_query"
-            ],
+            "rewritten_query": rewritten_query,
 
-            "query_intent": dax_result[
-                "query_intent"
-            ],
+            "query_intent": query_intent,
 
-            "semantic_plan": dax_result[
-                "ranked_schema"
-            ],
+            "semantic_context": semantic_context,
 
-            "dimension_plan": dax_result[
-                "dimension_plan"
-            ],
+            "semantic_plan": semantic_plan,
 
-            "dax": dax,
+            "dimension_plan": dimension_plan,
 
-            "validation": validation,
+            "sql": sql,
 
-            "execution_error": execution_error,
-
-            "rows": df.to_dict(
-                orient="records"
-            ),
+            "validation": validation_result,
 
             "columns": cols,
 
+            "row_count": len(rows),
+
+            "rows": rows,
+
+            "dataframe": df.to_dict(
+                orient="records"
+            ),
+
+            "explanation": explanation,
+
             "summary": summary,
 
-            "evaluation": dax_result[
-                "evaluation"
-            ],
+            "evaluation": evaluation,
 
-            "llm_judge": llm_judge,
-
-            "powerbi": {
-                "embedUrl": embed_url,
-                "accessToken": embed_token,
-                "filters": filters
-            } if embed_token and validation["valid"] and not execution_error else None
+            "qa_judge": qa_judge
         }
 
+    except HTTPException:
+
+        raise
+
     except Exception as e:
-        traceback.print_exc()
 
         raise HTTPException(
             status_code=500,

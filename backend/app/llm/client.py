@@ -1,8 +1,13 @@
 import anthropic
+
 from openai import OpenAI
+
 from groq import Groq
 
-from backend.app.config import settings
+from backend.app.config import (
+    settings
+)
+
 from backend.app.llm.model_registry import (
     validate_provider
 )
@@ -27,10 +32,18 @@ def call_claude(
     prompt: str,
     system_prompt: str | None = None
 ) -> str:
+
     request_params = {
-        "model": settings.CLAUDE_MODEL,
-        "max_tokens": 1500,
-        "temperature": 0,
+
+        "model":
+            settings.CLAUDE_MODEL,
+
+        "max_tokens":
+            1500,
+
+        "temperature":
+            0,
+
         "messages": [
             {
                 "role": "user",
@@ -40,13 +53,22 @@ def call_claude(
     }
 
     if system_prompt:
-        request_params["system"] = system_prompt
 
-    response = claude_client.messages.create(
-        **request_params
+        request_params["system"] = (
+            system_prompt
+        )
+
+    response = (
+        claude_client.messages.create(
+            **request_params
+        )
     )
 
-    return response.content[0].text.strip()
+    return (
+        response.content[0]
+        .text
+        .strip()
+    )
 
 
 
@@ -58,6 +80,7 @@ def call_openai(
     messages = []
 
     if system_prompt:
+
         messages.append(
             {
                 "role": "system",
@@ -72,13 +95,22 @@ def call_openai(
         }
     )
 
-    response = openai_client.chat.completions.create(
-        model=settings.OPENAI_MODEL,
-        temperature=0,
-        messages=messages
+    response = (
+        openai_client.chat.completions.create(
+            model=settings.OPENAI_MODEL,
+
+            temperature=0,
+
+            messages=messages
+        )
     )
 
-    return response.choices[0].message.content.strip()
+    return (
+        response.choices[0]
+        .message
+        .content
+        .strip()
+    )
 
 
 
@@ -90,6 +122,7 @@ def call_groq(
     messages = []
 
     if system_prompt:
+
         messages.append(
             {
                 "role": "system",
@@ -104,13 +137,22 @@ def call_groq(
         }
     )
 
-    response = groq_client.chat.completions.create(
-        model=settings.GROQ_MODEL,
-        temperature=0,
-        messages=messages
+    response = (
+        groq_client.chat.completions.create(
+            model=settings.GROQ_MODEL,
+
+            temperature=0,
+
+            messages=messages
+        )
     )
 
-    return response.choices[0].message.content.strip()
+    return (
+        response.choices[0]
+        .message
+        .content
+        .strip()
+    )
 
 
 
@@ -120,9 +162,11 @@ def chat(
     provider: str | None = None
 ) -> str:
     """
-    Universal enterprise LLM wrapper supporting:
+    Universal enterprise LLM wrapper.
+
+    Supports:
     - Claude
-    - OpenAI GPT
+    - OpenAI
     - Groq
     """
 
@@ -133,29 +177,79 @@ def chat(
     try:
 
         if provider == "claude":
+
             return call_claude(
-                prompt,
-                system_prompt
+                prompt=prompt,
+                system_prompt=system_prompt
             )
 
         elif provider == "openai":
+
             return call_openai(
-                prompt,
-                system_prompt
+                prompt=prompt,
+                system_prompt=system_prompt
             )
 
         elif provider == "groq":
+
             return call_groq(
-                prompt,
-                system_prompt
+                prompt=prompt,
+                system_prompt=system_prompt
             )
 
-        else:
-            raise Exception(
-                f"Unsupported provider: {provider}"
-            )
+        raise Exception(
+            f"Unsupported provider: {provider}"
+        )
 
     except Exception as e:
+
         raise Exception(
             f"{provider.upper()} API Error: {str(e)}"
         )
+
+
+
+async def transcribe_with_openai(
+    audio_file_path: str
+) -> str:
+    """
+    OpenAI Whisper transcription.
+    """
+
+    with open(
+        audio_file_path,
+        "rb"
+    ) as audio_file:
+
+        transcript = (
+            openai_client.audio.transcriptions.create(
+                model=settings.OPENAI_WHISPER_MODEL,
+
+                file=audio_file
+            )
+        )
+
+    return transcript.text.strip()
+
+
+async def transcribe_with_groq(
+    audio_file_path: str
+) -> str:
+    """
+    Groq Whisper transcription.
+    """
+
+    with open(
+        audio_file_path,
+        "rb"
+    ) as audio_file:
+
+        transcript = (
+            groq_client.audio.transcriptions.create(
+                model=settings.GROQ_WHISPER_MODEL,
+
+                file=audio_file
+            )
+        )
+
+    return transcript.text.strip()
