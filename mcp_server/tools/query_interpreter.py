@@ -28,7 +28,7 @@ DB_SCHEMA_TEXT = "\n".join(
 
 
 INTERPRET_PROMPT = f"""
-You are an enterprise automotive ERP SQL query interpreter.
+You are an enterprise automotive ERP PostgreSQL query interpreter.
 
 You MUST choose ONLY from this database schema.
 
@@ -77,6 +77,9 @@ OUTPUT FORMAT:
 STRICT RULES
 ====================================================
 
+- PostgreSQL schema only
+- PostgreSQL analytical environment
+- PostgreSQL-compatible business interpretation
 - ONLY use provided schema
 - NEVER invent tables
 - NEVER invent columns

@@ -250,6 +250,11 @@ STRICT RULES
 ====================================================
 
 - ONLY use provided semantic model
+- PostgreSQL syntax only
+- Use LIMIT instead of TOP
+- Use NOW() instead of GETDATE()
+- Use DATE_TRUNC for time grouping
+- Use ILIKE for case-insensitive search
 - NEVER invent:
     - tables
     - columns
@@ -259,7 +264,7 @@ STRICT RULES
 - Prefer exact schema matches
 - Prefer operational KPIs
 - Prefer correct business relationships
-- Use ONLY valid SQL Server business logic
+- Use ONLY valid PostgreSQL business logic
 - Rank components by relevance
 - Return ONLY JSON
 

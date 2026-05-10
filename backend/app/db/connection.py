@@ -1,21 +1,35 @@
-import pyodbc
-from backend.app.config import settings
+import os
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from dotenv import load_dotenv
+
+load_dotenv()
+
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+if not DATABASE_URL:
+    raise Exception("DATABASE_URL not found in .env")
+
+engine = create_engine(
+    DATABASE_URL,
+    pool_pre_ping=True,
+    pool_recycle=300,
+)
+
+SessionLocal = sessionmaker(
+    autocommit=False,
+    autoflush=False,
+    bind=engine,
+)
 
 
 def get_connection():
     """
-    Create MSSQL connection using environment variables.
+    Return SQLAlchemy engine connection.
     """
 
-    connection_string = (
-        f"DRIVER={{{settings.DB_DRIVER}}};"
-        f"SERVER={settings.DB_SERVER};"
-        f"DATABASE={settings.DB_NAME};"
-        f"Trusted_Connection={settings.DB_TRUSTED_CONNECTION};"
-    )
-
     try:
-        conn = pyodbc.connect(connection_string)
+        conn = engine.connect()
         return conn
     except Exception as e:
-        raise Exception(f"Database connection failed: {str(e)}")
+        raise Exception(f"PostgreSQL connection failed: {str(e)}")

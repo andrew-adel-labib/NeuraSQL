@@ -61,6 +61,10 @@ RULES
 - Avoid technical SQL explanations
 - Focus on business insights
 - Return ONLY the final answer text
+- Prefer KPI-oriented insights
+- Highlight profitability and operational efficiency
+- Mention revenue impact where relevant
+- Prioritize executive summary style
 
 ====================================================
 OUTPUT

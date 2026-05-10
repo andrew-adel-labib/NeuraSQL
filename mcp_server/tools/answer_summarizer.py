@@ -75,6 +75,7 @@ Provide ONLY:
 8. No strategic analysis
 9. No executive summary
 10. No SQL explanation
+11. Only use information present in the query results
 
 ====================================================
 IMPORTANT

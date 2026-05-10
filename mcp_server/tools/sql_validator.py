@@ -1,5 +1,8 @@
 import re
-from backend.app.exceptions import SecurityViolation
+
+from backend.app.exceptions import (
+    SecurityViolation
+)
 
 
 FORBIDDEN_KEYWORDS = [
@@ -25,6 +28,7 @@ FORBIDDEN_KEYWORDS = [
 def validate(sql: str):
 
     if not sql:
+
         raise SecurityViolation(
             "Empty SQL query"
         )
@@ -38,16 +42,19 @@ def validate(sql: str):
     )
 
     if "--" in sql_clean:
+
         raise SecurityViolation(
             "Inline comments are not allowed"
         )
 
     if "/*" in sql_clean or "*/" in sql_clean:
+
         raise SecurityViolation(
             "Block comments are not allowed"
         )
 
     if ";" in sql_clean[:-1]:
+
         raise SecurityViolation(
             "Multiple SQL statements are not allowed"
         )
@@ -56,6 +63,7 @@ def validate(sql: str):
         sql_clean.startswith("select")
         or sql_clean.startswith("with")
     ):
+
         raise SecurityViolation(
             "Only SELECT queries are allowed"
         )

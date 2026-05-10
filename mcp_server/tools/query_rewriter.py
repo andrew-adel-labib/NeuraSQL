@@ -43,11 +43,14 @@ You MUST identify:
 5. Time grain
 6. Ranking intent
 7. Trend analysis intent
+8. PostgreSQL analytical compatibility
 
 ====================================================
 STRICT RULES
 ====================================================
 
+- PostgreSQL analytical environment
+- PostgreSQL-compatible terminology
 - Rewrite clearly
 - Expand vague business language
 - Infer analytical meaning

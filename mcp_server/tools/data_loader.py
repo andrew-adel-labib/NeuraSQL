@@ -3,6 +3,8 @@ import pandas as pd
 from decimal import Decimal
 from datetime import datetime, date
 
+from sqlalchemy import text
+
 from backend.app.db.connection import (
     get_connection
 )
@@ -26,18 +28,21 @@ def get_all_table_names():
 
     conn = get_connection()
 
-    cursor = conn.cursor()
+    query = """
+        SELECT table_name
+        FROM information_schema.tables
+        WHERE table_schema = 'public'
+        AND table_type = 'BASE TABLE'
+        ORDER BY table_name
+    """
 
-    cursor.execute("""
-        SELECT TABLE_NAME
-        FROM INFORMATION_SCHEMA.TABLES
-        WHERE TABLE_TYPE = 'BASE TABLE'
-        ORDER BY TABLE_NAME
-    """)
+    result = conn.execute(
+        text(query)
+    )
 
     tables = [
         row[0]
-        for row in cursor.fetchall()
+        for row in result.fetchall()
     ]
 
     conn.close()
@@ -52,23 +57,23 @@ def load_table_as_json(
 
     conn = get_connection()
 
-    cursor = conn.cursor()
+    query = f'''
+    SELECT *
+    FROM "{table_name}"
+    LIMIT {limit}
+    '''
 
-    query = f"""
-    SELECT TOP {limit} *
-    FROM {table_name}
-    """
+    result = conn.execute(
+        text(query)
+    )
 
-    cursor.execute(query)
-
-    columns = [
-        col[0]
-        for col in cursor.description
-    ]
+    columns = list(
+        result.keys()
+    )
 
     rows = []
 
-    for row in cursor.fetchall():
+    for row in result.fetchall():
 
         record = {}
 

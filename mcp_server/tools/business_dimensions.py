@@ -1,8 +1,8 @@
-import os
-import pyodbc
-from dotenv import load_dotenv
+from sqlalchemy import text
 
-load_dotenv()
+from backend.app.db.connection import (
+    get_connection
+)
 
 
 SQL_DIMENSION_QUERIES = {
@@ -87,45 +87,27 @@ SQL_DIMENSION_QUERIES = {
 }
 
 
-def get_sql_connection():
-
-    driver = os.getenv("DB_DRIVER")
-    server = os.getenv("DB_SERVER")
-    database = os.getenv("DB_NAME")
-
-    trusted = os.getenv(
-        "DB_TRUSTED_CONNECTION",
-        "yes"
-    )
-
-    conn_str = (
-        f"DRIVER={{{driver}}};"
-        f"SERVER={server};"
-        f"DATABASE={database};"
-        f"Trusted_Connection={trusted};"
-        f"TrustServerCertificate=yes;"
-    )
-
-    return pyodbc.connect(conn_str)
-
-
 def extract_business_dimensions():
 
-    conn = get_sql_connection()
-
-    cursor = conn.cursor()
+    conn = get_connection()
 
     extracted_dimensions = {}
 
     try:
 
-        for dimension_name, query in SQL_DIMENSION_QUERIES.items():
+        for dimension_name, query in (
+            SQL_DIMENSION_QUERIES.items()
+        ):
 
-            cursor.execute(query)
+            result = conn.execute(
+                text(query)
+            )
 
-            rows = cursor.fetchall()
+            rows = result.fetchall()
 
-            extracted_dimensions[dimension_name] = sorted(
+            extracted_dimensions[
+                dimension_name
+            ] = sorted(
                 list({
                     str(row[0]).strip()
                     for row in rows
@@ -145,7 +127,9 @@ if __name__ == "__main__":
 
     import json
 
-    dimensions = extract_business_dimensions()
+    dimensions = (
+        extract_business_dimensions()
+    )
 
     print(
         json.dumps(

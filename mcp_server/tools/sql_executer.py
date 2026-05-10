@@ -1,7 +1,15 @@
 from decimal import Decimal
 from datetime import datetime, date
-from backend.app.db.connection import get_connection
-from mcp_server.tools.sql_validator import validate
+
+from sqlalchemy import text
+
+from backend.app.db.connection import (
+    get_connection
+)
+
+from mcp_server.tools.sql_validator import (
+    validate
+)
 
 
 def normalize_value(value):
@@ -23,31 +31,27 @@ def execute_sql(sql: str):
 
     try:
 
-        cursor = conn.cursor()
+        result = conn.execute(
+            text(sql)
+        )
 
-        cursor.execute(sql)
+        rows_raw = result.fetchall()
 
-        if cursor.description is None:
-            return [], []
-
-        columns = [
-            column[0]
-            for column in cursor.description
-        ]
+        columns = list(result.keys())
 
         rows = []
 
-        for row in cursor.fetchall():
+        for row in rows_raw:
 
             record = {}
 
             for col, value in zip(columns, row):
 
-                record[col] = normalize_value(value)
+                record[col] = normalize_value(
+                    value
+                )
 
             rows.append(record)
-
-        cursor.close()
 
         return rows, columns
 

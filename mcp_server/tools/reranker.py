@@ -163,6 +163,9 @@ SEMANTIC MODEL
 STRICT RULES
 ====================================================
 
+- PostgreSQL schema only
+- PostgreSQL naming conventions
+- PostgreSQL-compatible relationships
 - Use ONLY provided schema
 - NEVER invent tables
 - NEVER invent columns

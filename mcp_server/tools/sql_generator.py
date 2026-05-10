@@ -1,3 +1,5 @@
+import re
+
 from backend.app.llm.client import chat
 
 from mcp_server.policies.sql_rules import (
@@ -30,36 +32,55 @@ def clean_sql(sql: str) -> str:
         ""
     )
 
-    reserved_keywords = [
-        "Identity",
-        "Order",
-        "Group",
-        "Key",
-        "Value",
-        "User"
-    ]
+    sql = sql.replace(
+        "[",
+        ""
+    )
 
-    for keyword in reserved_keywords:
+    sql = sql.replace(
+        "]",
+        ""
+    )
 
-        sql = sql.replace(
-            f" {keyword} ",
-            f" [{keyword}] "
+    top_match = re.search(
+        r"SELECT\s+TOP\s+(\d+)",
+        sql,
+        re.IGNORECASE
+    )
+
+    if top_match:
+
+        limit_value = top_match.group(1)
+
+        sql = re.sub(
+            r"SELECT\s+TOP\s+\d+",
+            "SELECT",
+            sql,
+            flags=re.IGNORECASE
         )
 
-        sql = sql.replace(
-            f".{keyword}",
-            f".[{keyword}]"
-        )
+        sql += f" LIMIT {limit_value}"
 
-        sql = sql.replace(
-            f"({keyword})",
-            f"([{keyword}])"
-        )
+    sql = re.sub(
+        r"\bISNULL\s*\(",
+        "COALESCE(",
+        sql,
+        flags=re.IGNORECASE
+    )
 
-        sql = sql.replace(
-            f",{keyword}",
-            f",[{keyword}]"
-        )
+    sql = re.sub(
+        r"\bGETDATE\s*\(\s*\)",
+        "NOW()",
+        sql,
+        flags=re.IGNORECASE
+    )
+
+    sql = re.sub(
+        r"ROUND\s*\((.+?),\s*(\d+)\)",
+        r"ROUND(CAST(\1 AS NUMERIC), \2)",
+        sql,
+        flags=re.IGNORECASE
+    )
 
     sql = sql.replace(
         ";",
@@ -72,8 +93,9 @@ def clean_sql(sql: str) -> str:
 def safe_fallback_sql() -> str:
 
     return """
-    SELECT TOP 1
-        'System operational' AS Status
+    SELECT
+        'System operational' AS status
+    LIMIT 1
     """
 
 
@@ -114,7 +136,7 @@ IMPORTANT RULES
 - Return ONLY raw SQL
 - No markdown
 - No explanations
-- SQL Server syntax only
+- PostgreSQL syntax only
 - Use ONLY schema provided
 - Never invent tables
 - Never invent columns
@@ -127,6 +149,37 @@ IMPORTANT RULES
 - Prefer business KPIs
 - Prefer aggregations
 - Prefer joins based on schema
+
+====================================================
+POSTGRESQL RULES
+====================================================
+
+- Use LIMIT instead of TOP
+- Use COALESCE instead of ISNULL
+- Never use square brackets []
+- Use CAST(value AS NUMERIC) before ROUND()
+- Never use SQL Server syntax
+- Use PostgreSQL-compatible SQL only
+
+GOOD EXAMPLES:
+
+SELECT *
+FROM table_name
+LIMIT 10
+
+SELECT ROUND(
+    CAST(total_amount AS NUMERIC),
+    2
+)
+
+SELECT COALESCE(quantity, 0)
+
+BAD EXAMPLES:
+
+SELECT TOP 10
+ISNULL(quantity, 0)
+[column_name]
+ROUND(double precision, integer)
 
 ====================================================
 OUTPUT

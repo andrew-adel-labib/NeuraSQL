@@ -39,13 +39,7 @@ class Settings(BaseSettings):
     )
 
 
-    DB_DRIVER: str
-
-    DB_SERVER: str
-
-    DB_NAME: str
-
-    DB_TRUSTED_CONNECTION: str = "yes"
+    DATABASE_URL: str
 
 
     LOG_LEVEL: str = "INFO"

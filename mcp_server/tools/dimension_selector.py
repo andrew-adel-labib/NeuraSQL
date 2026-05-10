@@ -65,6 +65,8 @@ STRICT RULES
     - aggregation
     - trend analysis
 - Return ONLY JSON
+- PostgreSQL analytical environment
+- PostgreSQL-compatible dimension planning
 
 ====================================================
 OUTPUT FORMAT

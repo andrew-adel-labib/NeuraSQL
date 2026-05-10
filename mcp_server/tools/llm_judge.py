@@ -116,6 +116,7 @@ Evaluate:
 4. Data relevance
 5. Summary quality
 6. Business usefulness
+7. PostgreSQL query compatibility
 
 ====================================================
 RETURN FORMAT
