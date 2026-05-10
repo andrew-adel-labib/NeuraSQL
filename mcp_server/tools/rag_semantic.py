@@ -1,29 +1,20 @@
 import faiss
 import numpy as np
 
-from sentence_transformers import (
-    SentenceTransformer
-)
+from sentence_transformers import SentenceTransformer
 
-from mcp_server.tools.schema_retriever import (
-    retrieve_schema
-)
+from mcp_server.tools.schema_retriever import retrieve_schema
 
 
 MODEL_NAME = "all-MiniLM-L6-v2"
-
 TOP_K = 5
 
-
 embedding_model = None
-
-semantic_chunks = None
-
+semantic_chunks = []
 index = None
 
 
 def initialize_rag():
-
     global embedding_model
     global semantic_chunks
     global index
@@ -31,29 +22,17 @@ def initialize_rag():
     if embedding_model is not None:
         return
 
-    print("🚀 Initializing semantic retriever...")
+    print("Initializing RAG system...")
 
-    embedding_model = SentenceTransformer(
-        MODEL_NAME
-    )
+    embedding_model = SentenceTransformer(MODEL_NAME)
 
     schema = retrieve_schema()
 
     chunks = []
 
-    for table in schema.get(
-        "tables",
-        []
-    ):
-
-        table_name = table.get(
-            "name"
-        )
-
-        columns = table.get(
-            "columns",
-            []
-        )
+    for table in schema.get("tables", []):
+        table_name = table.get("name")
+        columns = table.get("columns", [])
 
         chunk = f"""
 Table: {table_name}
@@ -61,7 +40,6 @@ Table: {table_name}
 Columns:
 {", ".join(columns)}
 """
-
         chunks.append(chunk)
 
     semantic_chunks = chunks
@@ -73,9 +51,7 @@ Columns:
 
     dimension = embeddings.shape[1]
 
-    index_instance = faiss.IndexFlatL2(
-        dimension
-    )
+    index_instance = faiss.IndexFlatL2(dimension)
 
     index_instance.add(
         np.array(
@@ -86,14 +62,10 @@ Columns:
 
     index = index_instance
 
-    print("✅ Semantic retriever initialized.")
+    print("RAG initialized successfully")
 
 
-def retrieve_context(
-    question: str,
-    top_k: int = TOP_K
-):
-
+def retrieve_context(question: str, top_k: int = TOP_K):
     initialize_rag()
 
     query_embedding = embedding_model.encode(
@@ -112,25 +84,15 @@ def retrieve_context(
     retrieved_chunks = []
 
     for idx in indices[0]:
-
-        if idx < len(
-            semantic_chunks
-        ):
-
+        if idx < len(semantic_chunks):
             retrieved_chunks.append(
                 semantic_chunks[idx]
             )
 
-    return "\n\n".join(
-        retrieved_chunks
-    )
+    return "\n\n".join(retrieved_chunks)
 
 
-def retrieve_ranked_schema(
-    question: str,
-    top_k: int = TOP_K
-):
-
+def retrieve_ranked_schema(question: str, top_k: int = TOP_K):
     context = retrieve_context(
         question,
         top_k=top_k
@@ -141,18 +103,3 @@ def retrieve_ranked_schema(
         "context": context,
         "top_k": top_k
     }
-
-
-if __name__ == "__main__":
-
-    while True:
-
-        q = input(
-            "\nAsk Question: "
-        )
-
-        ctx = retrieve_context(q)
-
-        print("\nRetrieved Context:\n")
-
-        print(ctx)
