@@ -61,28 +61,14 @@ app = FastAPI(
 )
 
 
+@app.on_event("startup")
+def startup_event():
 
-cache_loaded = False
+    print("\n🚀 Loading ERP database cache...\n")
 
+    load_cache()
 
-def ensure_cache_loaded():
-
-    global cache_loaded
-
-    if not cache_loaded:
-
-        print(
-            "\n🚀 Loading ERP database cache...\n"
-        )
-
-        load_cache()
-
-        cache_loaded = True
-
-        print(
-            "\n✅ ERP database cache loaded.\n"
-        )
-
+    print("\n✅ ERP database cache loaded.\n")
 
 
 @app.get("/")
@@ -90,41 +76,46 @@ async def root():
 
     return {
         "status": "running",
-        "service": (
-            "Enterprise AI SQL Analytics Copilot"
-        )
+        "service": "Enterprise AI SQL Analytics Copilot"
     }
-
 
 
 @app.post("/ask")
 async def ask(request: dict):
 
-    # Load cache only on first request
-    ensure_cache_loaded()
+    try:
 
-    question = request.get(
-        "question"
-    )
+        print("\n============================")
+        print("🚀 NEW REQUEST RECEIVED")
+        print("============================\n")
 
-    model_provider = request.get(
-        "provider",
-        "claude"
-    )
+        print("STEP 1 - Reading Request")
 
-    if not question:
+        question = request.get("question")
 
-        raise HTTPException(
-            status_code=400,
-            detail="Question is required."
+        model_provider = request.get(
+            "provider",
+            "claude"
         )
 
-    try:
+        print(f"Question: {question}")
+        print(f"Provider: {model_provider}")
+
+        if not question:
+
+            raise HTTPException(
+                status_code=400,
+                detail="Question is required."
+            )
+
+        print("\nSTEP 2 - Processing Query")
 
         query_processing = process_query(
             question,
             model_provider=model_provider
         )
+
+        print("✅ Query Processing Completed")
 
         rewritten_query = query_processing.get(
             "rewritten_query",
@@ -136,9 +127,17 @@ async def ask(request: dict):
             {}
         )
 
+        print(f"Rewritten Query: {rewritten_query}")
+
+        print("\nSTEP 3 - Retrieving Semantic Context")
+
         semantic_context = retrieve_context(
             rewritten_query
         )
+
+        print("✅ Semantic Context Retrieved")
+
+        print("\nSTEP 4 - Planning Semantics")
 
         semantic_plan = plan_semantics(
             rewritten_query,
@@ -146,15 +145,28 @@ async def ask(request: dict):
             model_provider=model_provider
         )
 
+        print("✅ Semantic Planning Completed")
+
+        print("\nSTEP 5 - Selecting Dimensions")
+
         dimension_plan = select_dimensions(
             rewritten_query,
             semantic_context,
             model_provider=model_provider
         )
 
+        print("✅ Dimension Selection Completed")
+
+        print("\nSTEP 6 - Generating SQL")
+
         sql = generate_sql(
             rewritten_query
         )
+
+        print("✅ SQL Generated")
+        print(sql)
+
+        print("\nSTEP 7 - Validating SQL")
 
         validate(sql)
 
@@ -162,12 +174,25 @@ async def ask(request: dict):
             "valid": True
         }
 
+        print("✅ SQL Validation Passed")
+
+        print("\nSTEP 8 - Executing SQL")
+
         rows, cols = execute_sql(sql)
+
+        print(f"✅ SQL Executed Successfully")
+        print(f"Rows Returned: {len(rows)}")
+
+        print("\nSTEP 9 - Creating DataFrame")
 
         df = pd.DataFrame(
             rows,
             columns=cols
         )
+
+        print("✅ DataFrame Created")
+
+        print("\nSTEP 10 - Generating Explanation")
 
         explanation = explain(
             question,
@@ -175,11 +200,19 @@ async def ask(request: dict):
             cols
         )
 
+        print("✅ Explanation Generated")
+
+        print("\nSTEP 11 - Summarizing Answer")
+
         summary = summarize_answer(
             question,
             rows,
             model_provider=model_provider
         )
+
+        print("✅ Summary Generated")
+
+        print("\nSTEP 12 - Evaluating Pipeline")
 
         evaluation = evaluate_pipeline(
             user_query=question,
@@ -207,6 +240,10 @@ async def ask(request: dict):
             provider=model_provider
         )
 
+        print("✅ Pipeline Evaluation Completed")
+
+        print("\nSTEP 13 - Running LLM Judge")
+
         qa_judge = judge_pipeline(
             user_query=question,
             rewritten_query=rewritten_query,
@@ -216,6 +253,10 @@ async def ask(request: dict):
             summary=summary,
             model_provider=model_provider
         )
+
+        print("✅ LLM Judge Completed")
+
+        print("\n🎉 REQUEST COMPLETED SUCCESSFULLY\n")
 
         return {
 
@@ -265,6 +306,10 @@ async def ask(request: dict):
         raise
 
     except Exception as e:
+
+        print("\n❌ ERROR OCCURRED")
+        print(str(e))
+        print(type(e))
 
         raise HTTPException(
             status_code=500,
