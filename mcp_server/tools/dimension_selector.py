@@ -12,10 +12,6 @@ from mcp_server.tools.schema_cache import (
     save_cached_query
 )
 
-from mcp_server.tools.business_dimension_mapper import (
-    correct_user_dimension_filters
-)
-
 
 DIMENSION_SELECTOR_PROMPT = """
 You are an enterprise automotive ERP semantic planner.
@@ -326,10 +322,9 @@ def select_dimensions(
 
     if cached:
 
-        cached["filters"] = (
-            correct_user_dimension_filters(
-                cached.get("filters", {})
-            )
+        cached["filters"] = cached.get(
+            "filters",
+            {}
         )
 
         return cached
@@ -376,10 +371,9 @@ USER QUESTION
 
     if parsed:
 
-        parsed["filters"] = (
-            correct_user_dimension_filters(
-                parsed.get("filters", {})
-            )
+        parsed["filters"] = parsed.get(
+            "filters",
+            {}
         )
 
         parsed["model_provider"] = (
@@ -398,10 +392,9 @@ USER QUESTION
         business_dimensions
     )
 
-    fallback["filters"] = (
-        correct_user_dimension_filters(
-            fallback.get("filters", {})
-        )
+    fallback["filters"] = fallback.get(
+        "filters",
+        {}
     )
 
     fallback["model_provider"] = (
