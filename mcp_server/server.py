@@ -61,18 +61,28 @@ app = FastAPI(
 )
 
 
-@app.on_event("startup")
-def startup_event():
 
-    print(
-        "\n🚀 Loading ERP database cache...\n"
-    )
+cache_loaded = False
 
-    load_cache()
 
-    print(
-        "\n✅ ERP database cache loaded.\n"
-    )
+def ensure_cache_loaded():
+
+    global cache_loaded
+
+    if not cache_loaded:
+
+        print(
+            "\n🚀 Loading ERP database cache...\n"
+        )
+
+        load_cache()
+
+        cache_loaded = True
+
+        print(
+            "\n✅ ERP database cache loaded.\n"
+        )
+
 
 
 @app.get("/")
@@ -86,8 +96,12 @@ async def root():
     }
 
 
+
 @app.post("/ask")
 async def ask(request: dict):
+
+    # Load cache only on first request
+    ensure_cache_loaded()
 
     question = request.get(
         "question"
@@ -107,7 +121,6 @@ async def ask(request: dict):
 
     try:
 
-
         query_processing = process_query(
             question,
             model_provider=model_provider
@@ -123,11 +136,9 @@ async def ask(request: dict):
             {}
         )
 
-
         semantic_context = retrieve_context(
             rewritten_query
         )
-
 
         semantic_plan = plan_semantics(
             rewritten_query,
@@ -135,25 +146,21 @@ async def ask(request: dict):
             model_provider=model_provider
         )
 
-
         dimension_plan = select_dimensions(
             rewritten_query,
             semantic_context,
             model_provider=model_provider
         )
 
-
         sql = generate_sql(
             rewritten_query
         )
-
 
         validate(sql)
 
         validation_result = {
             "valid": True
         }
-
 
         rows, cols = execute_sql(sql)
 
@@ -162,20 +169,17 @@ async def ask(request: dict):
             columns=cols
         )
 
-
         explanation = explain(
             question,
             rows,
             cols
         )
 
-
         summary = summarize_answer(
             question,
             rows,
             model_provider=model_provider
         )
-
 
         evaluation = evaluate_pipeline(
             user_query=question,
@@ -203,7 +207,6 @@ async def ask(request: dict):
             provider=model_provider
         )
 
-
         qa_judge = judge_pipeline(
             user_query=question,
             rewritten_query=rewritten_query,
@@ -213,7 +216,6 @@ async def ask(request: dict):
             summary=summary,
             model_provider=model_provider
         )
-
 
         return {
 
