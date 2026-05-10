@@ -1,5 +1,3 @@
-import os
-import json
 import faiss
 import numpy as np
 
@@ -17,15 +15,29 @@ MODEL_NAME = "all-MiniLM-L6-v2"
 TOP_K = 5
 
 
-embedding_model = SentenceTransformer(
-    MODEL_NAME
-)
+embedding_model = None
+
+semantic_chunks = None
+
+index = None
 
 
-schema = retrieve_schema()
+def initialize_rag():
 
+    global embedding_model
+    global semantic_chunks
+    global index
 
-def build_semantic_chunks():
+    if embedding_model is not None:
+        return
+
+    print("🚀 Initializing semantic retriever...")
+
+    embedding_model = SentenceTransformer(
+        MODEL_NAME
+    )
+
+    schema = retrieve_schema()
 
     chunks = []
 
@@ -52,37 +64,37 @@ Columns:
 
         chunks.append(chunk)
 
-    return chunks
+    semantic_chunks = chunks
 
-
-semantic_chunks = build_semantic_chunks()
-
-
-embeddings = embedding_model.encode(
-    semantic_chunks,
-    convert_to_numpy=True
-)
-
-
-dimension = embeddings.shape[1]
-
-
-index = faiss.IndexFlatL2(
-    dimension
-)
-
-index.add(
-    np.array(
-        embeddings,
-        dtype=np.float32
+    embeddings = embedding_model.encode(
+        semantic_chunks,
+        convert_to_numpy=True
     )
-)
+
+    dimension = embeddings.shape[1]
+
+    index_instance = faiss.IndexFlatL2(
+        dimension
+    )
+
+    index_instance.add(
+        np.array(
+            embeddings,
+            dtype=np.float32
+        )
+    )
+
+    index = index_instance
+
+    print("✅ Semantic retriever initialized.")
 
 
 def retrieve_context(
     question: str,
     top_k: int = TOP_K
 ):
+
+    initialize_rag()
 
     query_embedding = embedding_model.encode(
         [question],
